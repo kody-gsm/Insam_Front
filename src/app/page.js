@@ -7,7 +7,7 @@ export default function Home() {
   const websocket = new WebSocket(wsURL);
   const send = async e => {
     websocket.send(JSON.stringify({
-      message: "hello There tlqkf 드디어 된단",
+      message: "HELLO THERE",
       msg: "there"
     }))
   }
@@ -18,7 +18,7 @@ export default function Home() {
       };
 
       websocket.onmessage = (event) => {
-        console.log("WebSocket message received:", event);
+        console.log("WebSocket message received:", JSON.parse(event.data));
       };
 
       websocket.onclose = (e) => {
