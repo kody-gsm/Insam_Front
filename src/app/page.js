@@ -3,8 +3,9 @@ import { useEffect, useState } from 'react';
 import './style.scss'
 
 export default function Home() {
-  const wsURL = "ws://192.168.1.5:8000/ws/978198712"
+  const wsURL = `ws://${process.env.NEXT_PUBLIC_URL}/ws/978198712`
   const [socket, setSocket] = useState(null);
+  const [input, setinput] = useState('')
   const [img, setImg] = useState(null);
   const send = async e => {
     if (!socket) {
@@ -12,7 +13,7 @@ export default function Home() {
     }
     socket.send(JSON.stringify({
       type: 'test_message',
-      message: "HELLO THERE"
+      message: input
     }))
   }
   useEffect(e => {
@@ -24,7 +25,7 @@ export default function Home() {
     };
 
     socket.onmessage = (event) => {
-      console.log(event.data);
+      console.log(JSON.parse(event.data));
       if (JSON.parse(event.data)['type'] === 'image') {
         setImg(`data:image/png;base64,${JSON.parse(event.data)['message']}`);
       }
@@ -51,8 +52,13 @@ export default function Home() {
   }, [])
   return (
     <main>
-      hello
-      <button onClick={send}>send</button>
+      <form onSubmit={e => {
+        e.preventDefault();
+        setinput('');
+      }}>
+        <input value={input} onChange={e => setinput(e.target.value)} />
+        <button onClick={send}>send</button>
+      </form>
       <img src={img} alt='img' />
     </main>
   )
