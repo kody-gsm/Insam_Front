@@ -1,0 +1,40 @@
+aside {
+  position: absolute;
+
+  .whitespace {
+    height: 80svh;
+    width: 70px;
+    border: 1px solid #d9d9d9;
+    box-shadow: 0 0 3px 0 gray;
+    border-left: none;
+    border-top: none;
+    border-end-end-radius: 30px;
+
+  }
+
+  .greenWrap {
+    position: absolute;
+    top: 20svh;
+    margin-top: -2.8px;
+  }
+
+  .green {
+    z-index: 3;
+    position: absolute;
+    border-end-end-radius: 50px;
+    top: 0;
+    height: 20svh;
+    width: 300px;
+    background-color: #98DD9B;
+
+    &.bottom:after {
+      content: '';
+      position: absolute;
+      left: 30px;
+      bottom: -8px;
+      border-left: 16px solid transparent;
+      border-right: 16px solid transparent;
+      border-top: 8px solid #666;
+    }
+  }
+}
