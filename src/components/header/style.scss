@@ -1,0 +1,24 @@
+header {
+  margin: auto;
+  width: 100svw;
+  padding: 5px 20svw;
+  font-size: 17px;
+  display: flex;
+  justify-content: space-between;
+  background-color: #98DD9B;
+  align-items: center;
+
+  .login {
+    background-color: white;
+    padding: 5px 50px;
+    border-radius: 100px;
+
+    &:hover {
+      background-color: darken(white, 10%);
+    }
+  }
+
+  .insam {
+    margin-top: 10px;
+  }
+}
