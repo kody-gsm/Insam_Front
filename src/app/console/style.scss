@@ -1,0 +1,153 @@
+main {
+  position: absolute;
+  right: 5svw;
+  top: 7.5svh;
+  width: 73svw;
+  height: 85svh;
+  border: 2px solid #d9d9d9;
+  border-radius: 50px;
+
+  display: flex;
+  padding: 70px 100px;
+  padding-right: 0;
+  padding-bottom: 0;
+  justify-content: left;
+
+  h3 {
+    color: gray;
+    cursor: pointer;
+
+    &:hover {
+      color: black;
+    }
+
+    &:active {
+      color: gray;
+    }
+  }
+
+  .content {
+    width: 78%;
+    margin-left: 50px;
+    margin-top: 50px;
+    height: calc(100% - 50px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      // display: none;
+      width: 30px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: white;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: #d9d9d9;
+      border-radius: 300px;
+      border: 10px solid white;
+    }
+
+    .add {
+      font-size: 50px;
+      min-width: 70px;
+      min-height: 70px;
+      cursor: pointer;
+      background-color: white;
+      color: black;
+      border: 1px solid gray;
+      border-radius: 20px;
+      margin-bottom: 30px;
+
+      &:hover {
+        background-color: darken($color: white, $amount: 5%);
+      }
+
+      &:active {
+        background-color: white;
+      }
+    }
+  }
+}
+
+.pot {
+  width: 100%;
+  border: 1px solid gray;
+  min-height: 150px;
+  border-radius: 40px;
+  padding: 40px;
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .flex {
+    display: flex;
+  }
+
+  .middle {
+    margin-top: 5px;
+
+    input {
+      background-color: white;
+      color: black;
+      width: 400px;
+    }
+
+    a {
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    .status {
+      display: flex;
+
+      span {
+        margin-right: 10px;
+      }
+
+      .red {
+        width: 20px;
+        height: 20px;
+        background-color: red;
+        border-radius: 50px;
+      }
+
+      .green {
+        width: 20px;
+        height: 20px;
+        background-color: green;
+        border-radius: 50px;
+      }
+    }
+  }
+
+  .profile {
+    background-color: #e6e6e6;
+    width: 100px;
+    height: 100px;
+    margin-right: 20px;
+    border-radius: 20px;
+  }
+
+  .edit {
+    button {
+      background-color: white;
+      border-radius: 10px;
+      padding: 5px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: darken($color: white, $amount: 5%);
+      }
+
+      &:active {
+        background-color: white;
+      }
+    }
+  }
+}
