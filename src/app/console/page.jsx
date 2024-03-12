@@ -6,11 +6,12 @@ import { useEffect, useState } from "react";
 
 export default function Login() {
   const [editmode, setEditmode] = useState(-1)
-  const [addpotnum, setAddpotnum] = useState('');
+  const [popup, setPopup] = useState('');
   useEffect(e => {
     //변경 값 보내기
   }, [editmode])
   return <div>
+    {popup && <Popup setPopup={setPopup} />}
     <Nav />
     <main>
       <div>
@@ -30,12 +31,32 @@ export default function Login() {
         <Pot index={3} link={`/console/${0}`} name={'오기'} status={true} editmode={editmode} setEditmode={setEditmode} />
         <Pot index={4} link={`/console/${0}`} name={'오기'} status={true} editmode={editmode} setEditmode={setEditmode} />
         <Pot index={5} link={`/console/${0}`} name={'오기'} status={true} editmode={editmode} setEditmode={setEditmode} />
-        <button className="add">
+        <button className="add" onClick={e => setPopup(true)}>
           +
         </button>
       </div>
     </main>
   </div>
+}
+
+function Popup({ setPopup }) {
+  const [input, setInput] = useState('')
+  return <>
+    <div className="popup" onClick={e => setPopup(false)}>
+    </div>
+    <div className="popupcontent">
+      <h2 onClick={e => setPopup(false)}>
+        나가기
+      </h2>
+      <div className="submit">
+        <h3>
+          화분번호를 입력해주세요.
+        </h3>
+        <input value={input} onChange={e => setInput(e.target.value)} />
+      </div>
+      <button>연결시도하기</button>
+    </div>
+  </>
 }
 
 function Pot({ index, name, status, editmode, setEditmode, link }) {

@@ -151,3 +151,59 @@ main {
     }
   }
 }
+
+.popup {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100svw;
+  height: 100svh;
+  z-index: 4;
+  background-color: #0000007c;
+}
+
+.popupcontent {
+  position: absolute;
+  z-index: 5;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  padding: 50px;
+  border-radius: 20px;
+  width: 50svw;
+  height: 50svh;
+  /* width의 50% */
+  margin-left: -25svw;
+  margin-top: -25svh;
+  background-color: white;
+
+  justify-content: space-between;
+
+  h2 {
+    color: gray;
+    cursor: pointer;
+  }
+
+  button {
+    height: max-content;
+    padding: 10px 30px;
+    cursor: pointer;
+  }
+
+  .submit {
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    input {
+      margin-top: 10px;
+      width: 25svw;
+      background-color: white;
+      color: black;
+      border: 1px solid gray;
+      border-radius: 20px;
+      padding: 10px 20px;
+    }
+  }
+}
