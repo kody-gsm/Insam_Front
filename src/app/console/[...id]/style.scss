@@ -1,0 +1,152 @@
+main {
+  position: absolute;
+  right: 5svw;
+  top: 7.5svh;
+  width: 73svw;
+  height: 85svh;
+  border: 2px solid #d9d9d9;
+  border-radius: 50px;
+
+  display: flex;
+  padding: 70px 100px;
+  padding-right: 0;
+  padding-bottom: 0;
+  justify-content: left;
+
+  h3 {
+    color: gray;
+    cursor: pointer;
+
+    &:hover {
+      color: black;
+    }
+
+    &:active {
+      color: gray;
+    }
+  }
+
+  .contents {
+    width: 78%;
+    margin-left: 50px;
+    // margin-top: 50px;
+    height: calc(100% - 50px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      // display: none;
+      width: 30px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: white;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: #d9d9d9;
+      border-radius: 300px;
+      border: 10px solid white;
+    }
+
+    .flexs {
+      display: flex;
+      justify-content: space-between;
+      width: 90%;
+    }
+
+    .node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      p {
+        font-size: 25px;
+        color: gray;
+        font-weight: bold;
+        margin-bottom: 20px;
+      }
+
+      span {
+        font-size: 35px;
+        font-weight: bold;
+      }
+
+    }
+
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      margin-left: -10svw;
+
+      button {
+        background-color: #98DD9B;
+        color: black;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 30px;
+        font-weight: bold;
+        font-size: 16px;
+      }
+
+      .set_target {
+        cursor: pointer;
+
+        &:hover {
+          background-color: darken($color: #98DD9B, $amount: 5%);
+        }
+      }
+    }
+
+    .second {
+      width: calc(100% - 15svw);
+      // height: calc(100% - 220px);
+      height: 30svw;
+      margin-top: 150px;
+      // margin-top: 50px;
+      position: absolute;
+      left: 100px;
+      display: flex;
+      justify-content: space-between;
+
+      .nodes {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 50%;
+
+        button {
+          background-color: #98DD9B;
+          color: black;
+          border: none;
+          padding: 5px 10px;
+          border-radius: 30px;
+          font-weight: bold;
+          font-size: 16px;
+          cursor: pointer;
+
+          &:hover {
+            background-color: darken($color: #98DD9B, $amount: 5%);
+          }
+        }
+      }
+
+      .img {
+        width: 44svw;
+        height: 33svw;
+        min-width: 400px;
+        min-height: 300px;
+
+        img {
+          width: 100%;
+          height: 100%;
+          background-color: lightgray;
+          border-radius: 20px;
+        }
+      }
+    }
+  }
+}

@@ -4,7 +4,7 @@ import './style.scss'
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-export default function Login() {
+export default function Console() {
   const [editmode, setEditmode] = useState(-1)
   const [popup, setPopup] = useState('');
   useEffect(e => {
@@ -41,6 +41,7 @@ export default function Login() {
 
 function Popup({ setPopup }) {
   const [input, setInput] = useState('')
+  const [error, setError] = useState(null)
   return <>
     <div className="popup" onClick={e => setPopup(false)}>
     </div>
@@ -53,8 +54,9 @@ function Popup({ setPopup }) {
           화분번호를 입력해주세요.
         </h3>
         <input value={input} onChange={e => setInput(e.target.value)} />
+        {error && <p className="error">연결 오류: {error}</p>}
       </div>
-      <button>연결시도하기</button>
+      <button onClick={e => setError('API is not connected.')}>연결시도하기</button>
     </div>
   </>
 }
@@ -66,8 +68,7 @@ function Pot({ index, name, status, editmode, setEditmode, link }) {
   }, []);
   return <div className="pot">
     <div className="flex">
-      <div className="profile">
-      </div>
+      <Link href={link}> <div className="profile" /></Link>
       <div className="middle">
         {editmode !== index && <Link href={link}>{nick}</Link>}
         {editmode === index && <input autoFocus onKeyDown={e => {
@@ -84,17 +85,17 @@ function Pot({ index, name, status, editmode, setEditmode, link }) {
     <div className="edit">
       {editmode !== index && <button onClick={e => setEditmode(index)}>
         <svg width="30" height="30" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M35.4424 2L2.44238 35" stroke="black" stroke-width="3" stroke-linecap="round" />
-          <path d="M43.894 11.0339L10.9639 43.964" stroke="black" stroke-width="3" stroke-linecap="round" />
-          <path d="M8 30L16 38" stroke="black" stroke-width="3" stroke-linecap="round" />
-          <path d="M35.5876 2.58771L43.5876 10.5877" stroke="black" stroke-width="3" stroke-linecap="round" />
-          <path d="M2.03613 35.255L2 44" stroke="black" stroke-width="3" stroke-linecap="round" />
-          <path d="M2 44L11 44" stroke="black" stroke-width="3" stroke-linecap="round" />
+          <path d="M35.4424 2L2.44238 35" stroke="black" strokeWidth="3" strokeLinecap="round" />
+          <path d="M43.894 11.0339L10.9639 43.964" stroke="black" strokewidth="3" strokeLinecap="round" />
+          <path d="M8 30L16 38" stroke="black" strokeWidth="3" strokeLinecap="round" />
+          <path d="M35.5876 2.58771L43.5876 10.5877" stroke="black" strokeWidth="3" strokeLinecap="round" />
+          <path d="M2.03613 35.255L2 44" stroke="black" strokeWidth="3" strokeLinecap="round" />
+          <path d="M2 44L11 44" stroke="black" strokeWidth="3" strokeLinecap="round" />
         </svg>
       </button>}
       {editmode === index && <button onClick={e => setEditmode(-1)}>
         <svg width="30" height="30" viewBox="0 0 69 47" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M3 20.5L27.5 41.5L66 3.5" stroke="#98DD9B" stroke-width="8" />
+          <path d="M3 20.5L27.5 41.5L66 3.5" stroke="#98DD9B" strokeWidth="8" />
         </svg>
       </button>}
     </div>
