@@ -1,0 +1,36 @@
+.help {
+  main {
+    padding: 10svh 15svw;
+    transition: all ease 0.3s;
+  }
+}
+
+.Q {
+  margin-top: 20px;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 20px;
+  border-radius: 30px;
+  border: 1px solid gray;
+  cursor: pointer;
+
+  .svg {
+    transition: all ease 0.3s;
+  }
+
+  .turn {
+    transform: rotate(180deg);
+  }
+}
+
+.A {
+  border: 1px solid gray;
+  padding: 30px 40px;
+  font-size: 18px;
+  border-radius: 10px;
+  margin: auto;
+  margin-top: 30px;
+  width: 80%;
+}
