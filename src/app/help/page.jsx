@@ -10,8 +10,8 @@ export default function Help() {
         도움말
       </h1>
       <div className="write">
-        <h2>이거슨 도움말의 첫 번째다</h2>
-        <span>안녕하세요 저는 </span>
+        <h2>콘솔 사용법</h2>
+        <span>알아서 생각하세요</span>
       </div>
     </main>
     <Footer />
