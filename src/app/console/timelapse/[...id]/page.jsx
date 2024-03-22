@@ -31,12 +31,12 @@ export default function Console({ params }) {
           </h3>
         </Link>
         <h1>
-          화분 현황<br />
+          타임랩스<br />
           #{id}
         </h1>
       </div>
       <div className="contents">
-        <div className='flexs'>
+        {/* <div className='flexs'>
           <div className='node'>
             <p>공기중 온도</p>
             <span>{20}˚C</span>
@@ -53,9 +53,10 @@ export default function Console({ params }) {
             <button>목표 {20}%</button>
             <button className='set_target' onClick={e => setPopup(true)}>목표 설정</button>
           </div>
-        </div>
+        </div> */}
         <div className='second'>
-          <div className='img'>
+          대충 여기서 적을 거임
+          {/* <div className='img'>
             <img src='https://i.pinimg.com/originals/80/2a/62/802a62c6515f83bdee0e8f0ef1a7c68c.jpg' alt='no camera' />
           </div>
           <div className='nodes'>
@@ -67,12 +68,7 @@ export default function Console({ params }) {
               <p>생장등 조절</p>
               <button onClick={e => setLight(e => !e)}>{light ? 'on' : 'off'}</button>
             </div>
-            <Link href={`/console/timelapse/${id}`}>
-              <h3>
-                타임랩스 보기
-              </h3>
-            </Link>
-          </div>
+          </div> */}
         </div>
       </div>
     </main >
