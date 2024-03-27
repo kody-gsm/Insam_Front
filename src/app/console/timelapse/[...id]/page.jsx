@@ -6,26 +6,11 @@ import { useState } from 'react';
 
 export default function Console({ params }) {
   const { id } = params;
-  const [light, setLight] = useState(true);
-  const [popup, setPopup] = useState(false);
-  function objects(per, profer) {
-    return {
-      per: per,
-      profer: profer
-    }
-  }
-  const list = [
-    new objects(30, '다육이'),
-    new objects(40, '케일'),
-    new objects(65, '상추'),
-    new objects(75, '토마토')
-  ]
   return <div>
-    {popup && <Popup setPopup={setPopup} list={list} />}
     <Nav />
     <main>
       <div>
-        <Link href={'/console'}>
+        <Link href={`/console/${id}`}>
           <h3 >
             뒤로가기
           </h3>
