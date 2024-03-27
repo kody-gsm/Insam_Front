@@ -26,7 +26,7 @@ export default function Console({ params }) {
     <main>
       <div>
         <Link href={'/console'}>
-          <h3 >
+          <h3>
             뒤로가기
           </h3>
         </Link>
