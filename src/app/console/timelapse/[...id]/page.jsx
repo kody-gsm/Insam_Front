@@ -6,6 +6,11 @@ import { useState } from 'react';
 
 export default function Console({ params }) {
   const { id } = params;
+  const [list, setList] = useState([{
+    time: '2024-05-02 12:30:40',
+    img: ''
+  }])
+  const [index, setIndex] = useState(0)
   return <div>
     <Nav />
     <main>
@@ -21,41 +26,18 @@ export default function Console({ params }) {
         </h1>
       </div>
       <div className="contents">
-        {/* <div className='flexs'>
-          <div className='node'>
-            <p>공기중 온도</p>
-            <span>{20}˚C</span>
-          </div>
-          <div className='node'>
-            <p>공기중 습도</p>
-            <span>{20}%</span>
-          </div>
-          <div className='node'>
-            <p>땅속 습도</p>
-            <span>{20}%</span>
-          </div>
-          <div className='buttons'>
-            <button>목표 {20}%</button>
-            <button className='set_target' onClick={e => setPopup(true)}>목표 설정</button>
-          </div>
-        </div> */}
         <div className='second'>
-          대충 여기서 적을 거임
-          {/* <div className='img'>
-            <img src='https://i.pinimg.com/originals/80/2a/62/802a62c6515f83bdee0e8f0ef1a7c68c.jpg' alt='no camera' />
-          </div>
+          <p>{'2024-05-01'} ~ {'2024-05-31'}</p>
           <div className='nodes'>
-            <div className='node'>
-              <p>남은 물</p>
-              <span>{'매우 충분'}</span>
+            <div className='between'>
+              <div className='node'>
+                <p>{list[index]['time']}</p>
+                <img src={list[index]['img']} />
+              </div>
             </div>
-            <div className='node'>
-              <p>생장등 조절</p>
-              <button onClick={e => setLight(e => !e)}>{light ? 'on' : 'off'}</button>
-            </div>
-          </div> */}
+          </div>
         </div>
-      </div>
+      </div >
     </main >
   </div >
 }
