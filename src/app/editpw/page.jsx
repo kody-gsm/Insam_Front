@@ -11,7 +11,7 @@ export default function Login() {
   const [number, setNumber] = useState('');
   const [timer, setTimer] = useState(null)
   const [pass, setPass] = useState('')
-  const register = async e => {
+  const edit = async e => {
 
   }
   const sendmail = async e => {
@@ -47,7 +47,7 @@ export default function Login() {
     <Nav />
     <main>
       {!verified && <><h1> {/*1번 */}
-        회원가입
+        비밀번호 변경
       </h1>
         <div className="content">
           <b>이메일</b>
@@ -61,19 +61,19 @@ export default function Login() {
           <button onClick={e => verifying()}>인증</button>
         </div></>}
       {verified && !confirmed && <><h1>{/*2번 */}
-        회원가입
+        비밀번호 변경
       </h1>
         <div className="content">
           <h1>이메일이 인증되었습니다.</h1>
-          <button onClick={e => setConfirmed(true)}>회원가입 계속하기</button>
+          <button onClick={e => setConfirmed(true)}>비밀번호 변경 계속하기</button>
         </div></>}
       {verified && confirmed && <><h1>{/*3번 */}
-        회원가입
+        비밀번호 변경
       </h1>
         <div className="content">
           <b>비밀번호</b>
           <input placeholder="비밀번호를 적어주세요" />
-          <button onClick={register}>회원가입</button>
+          <button onClick={edit}>비밀번호 변경</button>
         </div></>}
     </main>
   </div>

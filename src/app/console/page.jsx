@@ -23,6 +23,11 @@ export default function Console() {
         <h1>
           화분 목록
         </h1>
+        <h3 onClick={e => {
+          window.location.href = '/editpw';
+        }}>
+          비밀번호 변경
+        </h3>
       </div>
       <div className="content">
         <Pot index={0} link={`/console/${0}`} name={'오기'} status={true} editmode={editmode} setEditmode={setEditmode} />
