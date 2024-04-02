@@ -9,7 +9,7 @@ export default function Login() {
   const [confirmed, setConfirmed] = useState(false);
   const [email, setEmail] = useState('');
   const [number, setNumber] = useState('');
-  const [timer, setTimer] = useState(null)
+  const [timer, setTimer] = useState(-1);
   const [pass, setPass] = useState('')
   const register = async e => {
 
