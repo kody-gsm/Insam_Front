@@ -29,7 +29,6 @@ main {
   .contents {
     width: 78%;
     margin-left: 50px;
-    // margin-top: 50px;
     height: calc(100% - 50px);
     display: flex;
     flex-direction: column;
@@ -37,7 +36,6 @@ main {
     overflow-y: auto;
 
     &::-webkit-scrollbar {
-      // display: none;
       width: 30px;
     }
 
@@ -106,7 +104,6 @@ main {
       // height: calc(100% - 220px);
       height: 30svw;
       margin-top: 150px;
-      // margin-top: 50px;
       position: absolute;
       left: 100px;
       display: flex;
@@ -191,7 +188,6 @@ main {
 
   .submits {
     margin: 20px;
-    // height: 100%;
     width: 70%;
     display: flex;
     flex-direction: column;
