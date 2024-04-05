@@ -7,7 +7,7 @@ export default function Home() {
   const [socket, setSocket] = useState(null);
   const [input, setinput] = useState('')
   const [img, setImg] = useState(null);
-  const send = async e => {
+  const send = async () => {
     if (!socket) {
       return;
     }
@@ -19,7 +19,7 @@ export default function Home() {
       message: input
     }))
   }
-  useEffect(e => {
+  useEffect(() => {
     if (!socket) {
       return;
     }
@@ -42,14 +42,14 @@ export default function Home() {
       console.error("WebSocket error:", error);
     };
 
-    return e => {
+    return () => {
       socket.close()
     }
   }, [socket])
-  useEffect(e => {
+  useEffect(() => {
     const websocket = new WebSocket(wsURL);
     setSocket(websocket);
-    return e => {
+    return () => {
       websocket.close()
     }
   }, [])
