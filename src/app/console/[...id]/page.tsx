@@ -15,10 +15,10 @@ export default function Console({ params }) {
     }
   }
   const list = [
-    new objects(30, '다육이'),
-    new objects(40, '케일'),
-    new objects(65, '상추'),
-    new objects(75, '토마토')
+    objects(30, '다육이'),
+    objects(40, '케일'),
+    objects(65, '상추'),
+    objects(75, '토마토')
   ]
   return <div>
     {popup && <Popup setPopup={setPopup} list={list} />}
@@ -80,7 +80,7 @@ export default function Console({ params }) {
 }
 
 function Popup({ setPopup, list }) {
-  const [num, setNum] = useState(-1);
+  const [num, setNum] = useState<number | string>(-1);
   return <>
     <div className="popup" onClick={e => setPopup(false)}>
     </div>

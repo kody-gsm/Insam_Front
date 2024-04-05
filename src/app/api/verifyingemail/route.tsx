@@ -9,7 +9,7 @@ let transporter = nodemailer.createTransport({
   }
 })
 
-export async function POST(req, response) {
+export async function POST(req: Request, response: Response) {
   const { email } = await req.json();
   const verfifycode = Math.floor(Math.random() * 1000000).toString().padStart(6, "0")
   const mailOption = {

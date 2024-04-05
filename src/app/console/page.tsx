@@ -6,8 +6,8 @@ import { useEffect, useState } from "react";
 
 export default function Console() {
   const [editmode, setEditmode] = useState(-1)
-  const [popup, setPopup] = useState('');
-  useEffect(e => {
+  const [popup, setPopup] = useState<boolean>(false);
+  useEffect(() => {
     //변경 값 보내기
   }, [editmode])
   return <div>
@@ -68,7 +68,7 @@ function Popup({ setPopup }) {
 
 function Pot({ index, name, status, editmode, setEditmode, link }) {
   const [nick, setNick] = useState('')
-  useEffect(e => {
+  useEffect(() => {
     setNick(name);
   }, []);
   return <div className="pot">
@@ -91,7 +91,7 @@ function Pot({ index, name, status, editmode, setEditmode, link }) {
       {editmode !== index && <button onClick={e => setEditmode(index)}>
         <svg width="30" height="30" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M35.4424 2L2.44238 35" stroke="black" strokeWidth="3" strokeLinecap="round" />
-          <path d="M43.894 11.0339L10.9639 43.964" stroke="black" strokewidth="3" strokeLinecap="round" />
+          <path d="M43.894 11.0339L10.9639 43.964" stroke="black" strokeWidth="3" strokeLinecap="round" />
           <path d="M8 30L16 38" stroke="black" strokeWidth="3" strokeLinecap="round" />
           <path d="M35.5876 2.58771L43.5876 10.5877" stroke="black" strokeWidth="3" strokeLinecap="round" />
           <path d="M2.03613 35.255L2 44" stroke="black" strokeWidth="3" strokeLinecap="round" />
