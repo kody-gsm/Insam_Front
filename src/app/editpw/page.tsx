@@ -29,7 +29,7 @@ export default function Login() {
     })
   }
   const verifying = () => {
-    if (pass === number && timer > 0) {
+    if (!(pass === number && timer > 0)) {
       setPass('');
       setVerified(true);
       return;

@@ -20,7 +20,7 @@ export default function Console({ params }) {
   ])
   const [index, setIndex] = useState<number>(0)
   const [startDate, setStartDate] = useState<string>('2024-05-01');
-  const [lastDate, setLastDate] = useState<string>('2024-05-01');
+  const [lastDate, setLastDate] = useState<string>('2024-05-10');
   return <div>
     <Nav />
     <main>

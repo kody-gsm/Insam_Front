@@ -12,18 +12,30 @@ class plants {
     this.name = name;
   }
 }
+
 export default function Console({ params }) {
   const { id } = params;
   const [light, setLight] = useState<boolean>(true);
   const [popup, setPopup] = useState<boolean>(false);
+  const [temp, setTemp] = useState<number>(20);
+  const [humi, setHumi] = useState<number>(20);
+  const [soil, setSoil] = useState<number>(20);
+  const [water, setWater] = useState<number>(20);
+  const [targetSoil, setTargetSoil] = useState<number>(30)
   const list = [
     new plants(30, '다육이'),
     new plants(40, '케일'),
     new plants(65, '상추'),
     new plants(75, '토마토')
   ]
+  const SetLightFunc = () => {
+    setLight((e: boolean) => !e);
+  }
+  const setTargetFunc = (target: number) => {
+    setTargetSoil(target);
+  }
   return <div>
-    {popup && <Popup setPopup={setPopup} list={list} initNum={2} />}
+    {popup && <Popup setPopup={setPopup} setTargetFunc={setTargetFunc} list={list} initNum={0} />}
     <Nav />
     <main>
       <div>
@@ -41,18 +53,18 @@ export default function Console({ params }) {
         <div className='flexs'>
           <div className='node'>
             <p>공기중 온도</p>
-            <span>{20}˚C</span>
+            <span>{temp}˚C</span>
           </div>
           <div className='node'>
             <p>공기중 습도</p>
-            <span>{20}%</span>
+            <span>{humi}%</span>
           </div>
           <div className='node'>
             <p>땅속 습도</p>
-            <span>{20}%</span>
+            <span>{soil}%</span>
           </div>
           <div className='buttons'>
-            <button>목표 {20}%</button>
+            <button>목표 {targetSoil}%</button>
             <button className='set_target' onClick={() => setPopup(true)}>목표 설정</button>
           </div>
         </div>
@@ -63,11 +75,15 @@ export default function Console({ params }) {
           <div className='nodes'>
             <div className='node'>
               <p>남은 물</p>
-              <span>{'매우 충분'}</span>
+              {water >= 80 && <span>매우 충분</span>}
+              {80 > water && water >= 60 && <span>충분</span>}
+              {60 > water && water >= 40 && <span>보통</span>}
+              {40 > water && water >= 20 && <span>부족</span>}
+              {20 > water && water >= 0 && <span>매우 부족</span>}
             </div>
             <div className='node'>
               <p>생장등 조절</p>
-              <button onClick={() => setLight((e: boolean) => !e)}>{light ? 'on' : 'off'}</button>
+              <button onClick={SetLightFunc}>{light ? 'on' : 'off'}</button>
             </div>
             <Link href={`/console/timelapse/${id}`}>
               <h3>
@@ -81,16 +97,18 @@ export default function Console({ params }) {
   </div >
 }
 
-function Popup({ setPopup, list, initNum }) {
+function Popup({ setPopup, list, initNum, setTargetFunc }) {
   const [num, setNum] = useState<plants | number | string>(initNum);
   const [percent, setPercent] = useState<number>(0);
   const Setting = async () => {
+    const per = percent || (num === 0 ? 30 : (num === 1 ? 40 : (num === 2 ? 65 : 75)));
     if (num === 'input') {
       if (percent < 30 || percent > 90) {
-        alert("적정 수치에 맞지 않습니다.");
+        alert("적정 수치에 맞지 않습니다.\n30이상 90이하로 맞춰주세요");
         return
       }
     }
+    setTargetFunc(per);
     setPopup(false);
   }
   return <>

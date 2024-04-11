@@ -22,8 +22,8 @@ export default function Login() {
     }
     await axios.post('/api/verifyingemail', { email }).then(e => {
       setPass(e.data.code);
-      alert("성공적으로 보내졌습니다.");
       setTimer(60);
+      alert("성공적으로 보내졌습니다.");
     }).catch(e => {
       console.log(e)
     })

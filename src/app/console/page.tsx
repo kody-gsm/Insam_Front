@@ -7,6 +7,9 @@ import { useEffect, useState } from "react";
 export default function Console() {
   const [editmode, setEditmode] = useState(-1)
   const [popup, setPopup] = useState<boolean>(false);
+  const EditName = (id: number, text: string) => {
+
+  }
   useEffect(() => {
     //변경 값 보내기
   }, [editmode])
