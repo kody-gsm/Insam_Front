@@ -1,16 +1,16 @@
 "use client"
 import Nav from "@/components/nav/nav";
 import './style.scss'
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import axios from "axios";
 
 export default function Login() {
-  const [verified, setVerified] = useState(false);
-  const [confirmed, setConfirmed] = useState(false);
-  const [email, setEmail] = useState('');
-  const [number, setNumber] = useState('');
-  const [timer, setTimer] = useState(-1)
-  const [pass, setPass] = useState('')
+  const [verified, setVerified] = useState<boolean>(false);
+  const [confirmed, setConfirmed] = useState<boolean>(false);
+  const [email, setEmail] = useState<string>('');
+  const [number, setNumber] = useState<string>('');
+  const [timer, setTimer] = useState<number>(-1);
+  const [pass, setPass] = useState<string>('');
   const edit = async () => {
 
   }
@@ -51,21 +51,22 @@ export default function Login() {
       </h1>
         <div className="content">
           <b>이메일</b>
-          <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="이메일을 적어주세요" />
+          <input type="email" value={email} onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)} placeholder="이메일을 적어주세요" />
           <b>인증번호</b>
-          <input value={number} onChange={e => setNumber(e.target.value)} placeholder="인증번호를 적어주세요" />
+          <input value={number} onChange={(e: ChangeEvent<HTMLInputElement>) => setNumber(e.target.value)} placeholder="인증번호를 적어주세요" />
           <div className="flex">
             {timer >= 0 && <span>남은 시간 {timer}초</span>}
-            <span className="button" onClick={e => sendmail()}>보내기</span>
+            <span className="button" onClick={sendmail}>보내기</span>
           </div>
-          <button onClick={e => verifying()}>인증</button>
+          <button onClick={verifying}>인증</button>
         </div></>}
-      {verified && !confirmed && <><h1>{/*2번 */}
-        비밀번호 변경
-      </h1>
+      {verified && !confirmed && <>
+        <h1>{/*2번 */}
+          비밀번호 변경
+        </h1>
         <div className="content">
           <h1>이메일이 인증되었습니다.</h1>
-          <button onClick={e => setConfirmed(true)}>비밀번호 변경 계속하기</button>
+          <button onClick={() => setConfirmed(true)}>비밀번호 변경 계속하기</button>
         </div></>}
       {verified && confirmed && <><h1>{/*3번 */}
         비밀번호 변경
@@ -74,7 +75,8 @@ export default function Login() {
           <b>비밀번호</b>
           <input placeholder="비밀번호를 적어주세요" />
           <button onClick={edit}>비밀번호 변경</button>
-        </div></>}
+        </div>
+      </>}
     </main>
   </div>
 }

@@ -4,9 +4,9 @@ import './style.scss'
 
 export default function Home() {
   const wsURL = `ws://${process.env.NEXT_PUBLIC_URL}/ws/978198712`
-  const [socket, setSocket] = useState(null);
-  const [input, setinput] = useState('')
-  const [img, setImg] = useState(null);
+  const [socket, setSocket] = useState<null | WebSocket>(null);
+  const [input, setinput] = useState<string>('')
+  const [img, setImg] = useState<string | null>(null);
   const send = async () => {
     if (!socket) {
       return;
@@ -34,7 +34,7 @@ export default function Home() {
       }
     };
 
-    socket.onclose = (e) => {
+    socket.onclose = () => {
       console.log("WebSocket connection closed");
     };
 

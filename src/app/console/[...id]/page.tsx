@@ -2,26 +2,28 @@
 import Nav from '@/components/nav/nav';
 import './style.scss';
 import Link from 'next/link';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
+class plants {
+  preferSoil: number;
+  name: string;
+  constructor(preferSoil: number, name: string) {
+    this.preferSoil = preferSoil;
+    this.name = name;
+  }
+}
 export default function Console({ params }) {
   const { id } = params;
-  const [light, setLight] = useState(true);
-  const [popup, setPopup] = useState(false);
-  function objects(per, profer) {
-    return {
-      per: per,
-      profer: profer
-    }
-  }
+  const [light, setLight] = useState<boolean>(true);
+  const [popup, setPopup] = useState<boolean>(false);
   const list = [
-    objects(30, '다육이'),
-    objects(40, '케일'),
-    objects(65, '상추'),
-    objects(75, '토마토')
+    new plants(30, '다육이'),
+    new plants(40, '케일'),
+    new plants(65, '상추'),
+    new plants(75, '토마토')
   ]
   return <div>
-    {popup && <Popup setPopup={setPopup} list={list} />}
+    {popup && <Popup setPopup={setPopup} list={list} initNum={2} />}
     <Nav />
     <main>
       <div>
@@ -51,7 +53,7 @@ export default function Console({ params }) {
           </div>
           <div className='buttons'>
             <button>목표 {20}%</button>
-            <button className='set_target' onClick={e => setPopup(true)}>목표 설정</button>
+            <button className='set_target' onClick={() => setPopup(true)}>목표 설정</button>
           </div>
         </div>
         <div className='second'>
@@ -65,7 +67,7 @@ export default function Console({ params }) {
             </div>
             <div className='node'>
               <p>생장등 조절</p>
-              <button onClick={e => setLight(e => !e)}>{light ? 'on' : 'off'}</button>
+              <button onClick={() => setLight((e: boolean) => !e)}>{light ? 'on' : 'off'}</button>
             </div>
             <Link href={`/console/timelapse/${id}`}>
               <h3>
@@ -79,35 +81,45 @@ export default function Console({ params }) {
   </div >
 }
 
-function Popup({ setPopup, list }) {
-  const [num, setNum] = useState<number | string>(-1);
+function Popup({ setPopup, list, initNum }) {
+  const [num, setNum] = useState<plants | number | string>(initNum);
+  const [percent, setPercent] = useState<number>(0);
+  const Setting = async () => {
+    if (num === 'input') {
+      if (percent < 30 || percent > 90) {
+        alert("적정 수치에 맞지 않습니다.");
+        return
+      }
+    }
+    setPopup(false);
+  }
   return <>
-    <div className="popup" onClick={e => setPopup(false)}>
+    <div className="popup" onClick={() => setPopup(false)}>
     </div>
     <div className="popupcontent">
       <h2 onClick={e => setPopup(false)}>
         나가기
       </h2>
       <div className="submits">
-        {list.map((i, n) =>
-          <div key={n} className={`option ${num === i && 'choose'}`} onClick={e => setNum(i)}>
+        {list.map((i: plants, n: number) =>
+          <div key={n} className={`option ${num === n && 'choose'}`} onClick={() => setNum(n)}>
             <div>
-              {i.per}%
+              {i.preferSoil}%
             </div>
             <div>
-              추천: {i.profer}
+              추천: {i.name}
             </div>
           </div>
         )}
-        <div className={`option ${num === 'input' && 'choose'}`} onClick={e => setNum('input')}>
+        <div className={`option ${num === 'input' && 'choose'}`} onClick={() => setNum('input')}>
           <div>
             직접선택하기
           </div>
         </div>
       </div>
       <div className='column'>
-        <button onClick={e => e}>설정</button>
-        {num === 'input' && <input type='number' min={0} max={80} placeholder='%단위' />}
+        <button onClick={Setting}>설정</button>
+        {num === 'input' && <input type='number' onChange={(e: ChangeEvent<HTMLInputElement>) => setPercent(+e.target.value)} min={0} max={80} placeholder='%단위' />}
       </div>
     </div>
   </>

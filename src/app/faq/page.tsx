@@ -2,7 +2,7 @@
 import Header from "@/components/header/header";
 import Footer from "@/components/footer/footer";
 import './style.scss';
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 
 export default function Help() {
   return <div className="help">
@@ -24,9 +24,9 @@ export default function Help() {
 }
 
 function QnA({ q, a }) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState<boolean>(false);
   return <>
-    <div className="Q" onClick={e => setOpen(e => !e)}>
+    <div className="Q" onClick={() => setOpen((e: boolean) => !e)}>
       <div>Q. {q}</div>
       <div className={`svg ${open && 'turn'}`}>
         <svg width="30" height="30" viewBox="0 0 54 32" fill="none" xmlns="http://www.w3.org/2000/svg">

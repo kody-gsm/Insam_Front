@@ -4,18 +4,23 @@ import './style.scss';
 import Link from 'next/link';
 import { useState } from 'react';
 
-type ImgStatus = {
-  time: string,
-  img: string
+class ImgStatus {
+  time: string;
+  img: string;
+  constructor(time: string, img: string) {
+    this.time = time;
+    this.img = img;
+  }
 }
 
 export default function Console({ params }) {
   const { id } = params;
-  const [list, setList] = useState<ImgStatus[]>([{
-    time: '2024-05-02 12:30:40',
-    img: ''
-  }])
-  const [index, setIndex] = useState(0)
+  const [list, setList] = useState<ImgStatus[]>([
+    new ImgStatus('2024-05-02 12:30:40', '')
+  ])
+  const [index, setIndex] = useState<number>(0)
+  const [startDate, setStartDate] = useState<string>('2024-05-01');
+  const [lastDate, setLastDate] = useState<string>('2024-05-01');
   return <div>
     <Nav />
     <main>
@@ -32,7 +37,7 @@ export default function Console({ params }) {
       </div>
       <div className="contents">
         <div className='second'>
-          <p>{'2024-05-01'} ~ {'2024-05-31'}</p>
+          <p>{startDate} ~ {lastDate}</p>
           <div className='nodes'>
             <div className='between'>
               <div className='node'>
