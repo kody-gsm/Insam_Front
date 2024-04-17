@@ -1,6 +1,41 @@
+import { tokenStore } from 'store';
 import './style.scss';
+import Client from '@/assets/client';
+import { useEffect } from 'react';
+import { AxiosResponse } from 'axios';
 
 export default function Nav() {
+  const { refresh, setAccess, setRefresh } = tokenStore(e => e);
+  // const tokenRefresh = async (): Promise<string> => {
+  //   return await Client.post('/user/account/refresh', refresh).then((res: AxiosResponse) => {
+  //     return 'string'
+  //   }).catch(e => {
+  //     return 'no data'
+  //   })
+  // }
+  if (typeof window !== 'undefined') {
+    let refreshTime: string = localStorage.getItem('refreshTime');
+    if (!refreshTime) {
+      return;
+    }
+    // console.log(new Date().getTime() > parseInt(refreshTime) - 1000 * 10, new Date().getTime())
+    if (new Date().getTime() > parseInt(refreshTime) - 1000 * 10, new Date().getTime()) {
+      // tokenRefresh().then((data: string) => {
+      //   refreshTime = data;
+      // })
+      if (refreshTime === 'no data') {
+
+      }
+    }
+    setInterval(() => {
+      console.log(new Date().getTime() > parseInt(refreshTime) - 1000 * 10, new Date().getTime())
+      // if ()
+    }, 10 * 1000)
+  }
+  useEffect(() => {
+    setAccess(localStorage.getItem('access'))
+    setRefresh(localStorage.getItem('refresh'))
+  }, [])
   return <aside>
     <div className='green'>
     </div>
