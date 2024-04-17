@@ -1,8 +1,9 @@
 "use client"
 import Nav from "@/components/nav/nav";
 import './style.scss'
-import { ChangeEvent, useEffect, useState } from "react";
-import axios from "axios";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import axios, { AxiosResponse } from "axios";
+import Client from "@/assets/client";
 
 export default function Login() {
   const [verified, setVerified] = useState<boolean>(false);
@@ -11,8 +12,18 @@ export default function Login() {
   const [number, setNumber] = useState<string>('');
   const [timer, setTimer] = useState<number>(-1);
   const [pass, setPass] = useState<string>('')
-  const register = async () => {
-
+  const register = async (e: FormEvent) => {
+    e.preventDefault();
+    Client.post('/user/account/sign-up', {
+      email: email,
+      password: pass
+    }).then((res: AxiosResponse) => {
+      console.log(res)
+      window.location.href = '/login';
+    }).catch(e => {
+      alert(e)
+      console.log(e)
+    })
   }
   const sendmail = async () => {
     var pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -77,7 +88,7 @@ export default function Login() {
         </h1>
         <div className="content">
           <b>비밀번호</b>
-          <input placeholder="비밀번호를 적어주세요" />
+          <input value={pass} onChange={(e: ChangeEvent<HTMLInputElement>) => setPass(e.target.value)} placeholder="비밀번호를 적어주세요" />
           <button onClick={register}>회원가입</button>
         </div>
       </>}

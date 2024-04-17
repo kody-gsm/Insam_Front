@@ -2,7 +2,7 @@
 import Nav from "@/components/nav/nav";
 import './style.scss'
 import { ChangeEvent, useEffect, useState } from "react";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
 export default function Login() {
   const [verified, setVerified] = useState<boolean>(false);
@@ -20,8 +20,8 @@ export default function Login() {
       alert('이메일 형식에 맞게 적어주세요')
       return;
     }
-    await axios.post('/api/verifyingemail', { email }).then(e => {
-      setPass(e.data.code);
+    await axios.post('/api/verifyingemail', { email }).then((res: AxiosResponse) => {
+      setPass(res.data.code);
       alert("성공적으로 보내졌습니다.");
       setTimer(60);
     }).catch(e => {
