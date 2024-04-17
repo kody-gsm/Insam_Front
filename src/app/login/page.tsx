@@ -4,10 +4,13 @@ import './style.scss'
 import Link from "next/link";
 import { ChangeEvent, FormEvent, useState } from "react";
 import Client from "@/assets/client";
+import axios, { AxiosResponse } from "axios";
+import { tokenStore } from "store";
 
 export default function Login() {
   const [email, setEmail] = useState<string>('')
   const [pw, setPw] = useState<string>('')
+  const { setAccess, setRefresh } = tokenStore(e => e);
   const TryLogin = async (e: FormEvent) => {
     e.preventDefault();
     var pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // 이메일 정규식
@@ -15,11 +18,15 @@ export default function Login() {
       alert('이메일 형식에 맞게 적어주세요')
       return;
     }
-    Client.post('/user/account/login', {
+    axios.post('/api/getToken', {
       email: email,
       password: pw
-    }).then(e => {
-      console.log(e)
+    }).then((res: AxiosResponse) => {
+      setAccess(res.data.access)
+      setRefresh(res.data.refresh)
+      localStorage.setItem('access', res.data.access)
+      localStorage.setItem('refresh', res.data.refresh)
+      window.location.href = '/console'
     }).catch(e => {
       alert(e)
       console.log(e)
