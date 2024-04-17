@@ -3,7 +3,6 @@ import Nav from "@/components/nav/nav";
 import './style.scss'
 import Link from "next/link";
 import { ChangeEvent, FormEvent, useState } from "react";
-import Client from "@/assets/client";
 import axios, { AxiosResponse } from "axios";
 import { tokenStore } from "store";
 
@@ -26,6 +25,7 @@ export default function Login() {
       setRefresh(res.data.refresh)
       localStorage.setItem('access', res.data.access)
       localStorage.setItem('refresh', res.data.refresh)
+      localStorage.setItem('refreshTime', (new Date().getTime() + 1000 * 60 * 10).toString())
       window.location.href = '/console'
     }).catch(e => {
       alert(e)
@@ -47,6 +47,12 @@ export default function Login() {
         <Link href={'/signup'}>
           <h3>
             계정이 없다면 회원가입
+          </h3>
+        </Link>
+        <hr />
+        <Link href={'/editpw'}>
+          <h3>
+            비밀번호를 까먹었다면 비밀번호 변경
           </h3>
         </Link>
       </form>

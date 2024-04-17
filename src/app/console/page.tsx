@@ -7,11 +7,17 @@ import { useEffect, useState } from "react";
 export default function Console() {
   const [editmode, setEditmode] = useState(-1)
   const [popup, setPopup] = useState<boolean>(false);
+  if (typeof window !== 'undefined') {
+    if (!localStorage.getItem('access')) {
+      window.location.href = '/'
+    }
+  }
   const EditName = (id: number, text: string) => {
 
   }
   useEffect(() => {
     //변경 값 보내기
+
   }, [editmode])
   return <div>
     {popup && <Popup setPopup={setPopup} />}
@@ -19,6 +25,7 @@ export default function Console() {
     <main>
       <div>
         <h3 onClick={e => {
+          localStorage.clear();
           window.location.href = '/';
         }}>
           로그아웃
@@ -33,12 +40,13 @@ export default function Console() {
         </h3>
       </div>
       <div className="content">
-        <Pot index={0} link={`/console/${0}`} name={'오기'} status={true} editmode={editmode} setEditmode={setEditmode} />
-        <Pot index={1} link={`/console/${0}`} name={'오기'} status={true} editmode={editmode} setEditmode={setEditmode} />
-        <Pot index={2} link={`/console/${0}`} name={'오기'} status={true} editmode={editmode} setEditmode={setEditmode} />
-        <Pot index={3} link={`/console/${0}`} name={'오기'} status={true} editmode={editmode} setEditmode={setEditmode} />
-        <Pot index={4} link={`/console/${0}`} name={'오기'} status={true} editmode={editmode} setEditmode={setEditmode} />
-        <Pot index={5} link={`/console/${0}`} name={'오기'} status={true} editmode={editmode} setEditmode={setEditmode} />
+        <Pot index={0} editname={EditName} link={`/console/${0}`} name={'오기'} status={true} editmode={editmode} setEditmode={setEditmode} />
+        <Pot index={1} editname={EditName} link={`/console/${0}`} name={'오기'} status={true} editmode={editmode} setEditmode={setEditmode} />
+        <Pot index={2} editname={EditName} link={`/console/${0}`} name={'오기'} status={true} editmode={editmode} setEditmode={setEditmode} />
+        <Pot index={3} editname={EditName} link={`/console/${0}`} name={'오기'} status={true} editmode={editmode} setEditmode={setEditmode} />
+        <Pot index={4} editname={EditName} link={`/console/${0}`} name={'오기'} status={true} editmode={editmode} setEditmode={setEditmode} />
+        <Pot index={5} editname={EditName} link={`/console/${0}`} name={'오기'} status={true} editmode={editmode} setEditmode={setEditmode} />
+        <Pot index={6} editname={EditName} link={`/console/${0}`} name={'오기'} status={true} editmode={editmode} setEditmode={setEditmode} />
         <button className="add" onClick={e => setPopup(true)}>
           +
         </button>
@@ -69,7 +77,7 @@ function Popup({ setPopup }) {
   </>
 }
 
-function Pot({ index, name, status, editmode, setEditmode, link }) {
+function Pot({ index, name, status, editmode, setEditmode, link, editname }) {
   const [nick, setNick] = useState('')
   useEffect(() => {
     setNick(name);

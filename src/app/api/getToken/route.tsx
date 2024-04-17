@@ -16,6 +16,7 @@ export async function POST(req: Request, response: Response) {
     }
     return NextResponse.json(data)
   }).catch(e => {
-    return NextResponse.json(e, { status: 500 })
+    // console.log(e.response.data)
+    return NextResponse.json(e.response.data.message, { status: e.response.status })
   })
 }
