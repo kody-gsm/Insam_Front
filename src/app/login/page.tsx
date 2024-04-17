@@ -3,17 +3,27 @@ import Nav from "@/components/nav/nav";
 import './style.scss'
 import Link from "next/link";
 import { ChangeEvent, FormEvent, useState } from "react";
+import Client from "@/assets/client";
 
 export default function Login() {
   const [email, setEmail] = useState<string>('')
   const [pw, setPw] = useState<string>('')
-  const TryLogin = (e: FormEvent) => {
+  const TryLogin = async (e: FormEvent) => {
     e.preventDefault();
     var pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // 이메일 정규식
     if (!pattern.test(email)) {
       alert('이메일 형식에 맞게 적어주세요')
       return;
     }
+    Client.post('/user/account/login', {
+      email: email,
+      password: pw
+    }).then(e => {
+      console.log(e)
+    }).catch(e => {
+      alert(e)
+      console.log(e)
+    })
   }
   return <div>
     <Nav />
