@@ -3,6 +3,7 @@ import Nav from "@/components/nav/nav";
 import './style.scss'
 import { ChangeEvent, useEffect, useState } from "react";
 import axios, { AxiosResponse } from "axios";
+import Client from "@/assets/client";
 
 export default function Login() {
   const [verified, setVerified] = useState<boolean>(false);
@@ -12,7 +13,13 @@ export default function Login() {
   const [timer, setTimer] = useState<number>(-1);
   const [pass, setPass] = useState<string>('');
   const edit = async () => {
-
+    Client.post('/user/account/password', { email: email, password: pass }).then((res: AxiosResponse) => {
+      if (res.status === 200) {
+        window.history.back();
+      }
+    }).catch(e => {
+      console.log(e)
+    })
   }
   const sendmail = async () => {
     var pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -29,7 +36,7 @@ export default function Login() {
     })
   }
   const verifying = () => {
-    if (!(pass === number && timer > 0)) {
+    if (pass === number && timer > 0) {
       setPass('');
       setVerified(true);
       return;
@@ -73,7 +80,7 @@ export default function Login() {
       </h1>
         <div className="content">
           <b>비밀번호</b>
-          <input placeholder="비밀번호를 적어주세요" />
+          <input value={pass} onChange={(e: ChangeEvent<HTMLInputElement>) => setPass(e.target.value)} placeholder="비밀번호를 적어주세요" />
           <button onClick={edit}>비밀번호 변경</button>
         </div>
       </>}
