@@ -1,6 +1,29 @@
+import { tokenStore } from 'store';
 import './style.scss';
+import Client from '@/assets/client';
+import { useEffect, useState } from 'react';
 
 export default function Nav() {
+  const { refresh, setRefresh } = tokenStore(e => e);
+  const [time, setTime] = useState<number>(0);
+  const tokenRefresh = async () => {
+    let refreshTime: string = localStorage.getItem('refreshTime');
+    if (!refreshTime || !refresh) {
+      return;
+    }
+    if (new Date().getTime() > parseInt(refreshTime) - 1000 * 10, new Date().getTime()) {
+      Client.post('/user/account/refresh', refresh, { withCredentials: true }).catch(e => { })
+    }
+  }
+  useEffect(() => {
+    setRefresh(localStorage.getItem('refresh'))
+  }, []);
+  useEffect(() => {
+    setTimeout(() => {
+      tokenRefresh()
+      setTime(e => e + 1);
+    }, 1000 * (time === 0 ? 0 : 30));
+  }, [time])
   return <aside>
     <div className='green'>
     </div>
