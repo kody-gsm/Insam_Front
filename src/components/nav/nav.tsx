@@ -19,11 +19,14 @@ export default function Nav() {
     setRefresh(localStorage.getItem('refresh'))
   }, []);
   useEffect(() => {
+    if (!refresh) {
+      return
+    }
     setTimeout(() => {
       tokenRefresh()
       setTime(e => e + 1);
     }, 1000 * (time === 0 ? 0 : 30));
-  }, [time])
+  }, [time, refresh])
   return <aside>
     <div className='green'>
     </div>

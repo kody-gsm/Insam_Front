@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import './style.scss'
 
 export default function Home() {
-  const wsURL = `ws://${process.env.NEXT_PUBLIC_URL}/ws/978198712`
+  const wsURL = `ws://${process.env.NEXT_PUBLIC_WS_URL}/ws/978198712`
   const [socket, setSocket] = useState<null | WebSocket>(null);
   const [input, setinput] = useState<string>('')
   const [img, setImg] = useState<string | null>(null);

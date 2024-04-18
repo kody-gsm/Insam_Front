@@ -68,7 +68,7 @@ export default function Console({ params }) {
             <button className='set_target' onClick={() => setPopup(true)}>목표 설정</button>
           </div>
         </div>
-        <div className='second'>
+        <div className='seconds'>
           <div className='img'>
             <img src='https://i.pinimg.com/originals/80/2a/62/802a62c6515f83bdee0e8f0ef1a7c68c.jpg' alt='no camera' />
           </div>
