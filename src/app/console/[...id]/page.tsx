@@ -2,7 +2,7 @@
 import Nav from '@/components/nav/nav';
 import './style.scss';
 import Link from 'next/link';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 
 class plants {
   preferSoil: number;
@@ -34,6 +34,51 @@ export default function Console({ params }) {
   const setTargetFunc = (target: number) => {
     setTargetSoil(target);
   }
+  const wsURL = `ws://${process.env.NEXT_PUBLIC_WS_URL}/user/cam/${1}`
+  const [socket, setSocket] = useState<null | WebSocket>(null);
+  const [img, setImg] = useState<string | null>(null);
+  const setTargetWater = async () => {
+    if (!socket) {
+      return;
+    }
+    socket.send(JSON.stringify({
+      header: {
+        'Authorization': 'asdfasdf'
+      },
+      type: 'test_message',
+      message: ''
+    }))
+  }
+  useEffect(() => {
+    if (!socket) {
+      return;
+    }
+    socket.onopen = () => {
+      console.log("WebSocket connection opened");
+    };
+    socket.onmessage = (event) => {
+      console.log(JSON.parse(event.data));
+      // if (JSON.parse(event.data)['type'] === 'image') {
+      //   setImg(`data:image/png;base64,${JSON.parse(event.data)['message']}`);
+      // }
+    };
+    socket.onclose = () => {
+      console.log("WebSocket connection closed");
+    };
+    socket.onerror = (error) => {
+      console.error("WebSocket error:", error);
+    };
+    return () => {
+      socket.close()
+    }
+  }, [socket])
+  useEffect(() => {
+    const websocket = new WebSocket(wsURL);
+    setSocket(websocket);
+    return () => {
+      websocket.close()
+    }
+  }, [])
   return <div>
     {popup && <Popup setPopup={setPopup} setTargetFunc={setTargetFunc} list={list} initNum={0} />}
     <Nav />
@@ -70,7 +115,7 @@ export default function Console({ params }) {
         </div>
         <div className='seconds'>
           <div className='img'>
-            <img src='https://i.pinimg.com/originals/80/2a/62/802a62c6515f83bdee0e8f0ef1a7c68c.jpg' alt='no camera' />
+            <img src={img || 'https://i.pinimg.com/originals/80/2a/62/802a62c6515f83bdee0e8f0ef1a7c68c.jpg'} alt='no camera' />
           </div>
           <div className='nodes'>
             <div className='node'>

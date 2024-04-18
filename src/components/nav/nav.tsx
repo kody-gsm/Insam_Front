@@ -11,8 +11,11 @@ export default function Nav() {
     if (!refreshTime || !refresh) {
       return;
     }
-    if (new Date().getTime() > parseInt(refreshTime) - 1000 * 10, new Date().getTime()) {
-      Client.post('/user/account/refresh', refresh, { withCredentials: true }).catch(e => { })
+    if (new Date().getTime() > parseInt(refreshTime) - 1000 * 30) {
+      Client.post('/user/account/refresh', refresh, { withCredentials: true }).catch(e => {
+        console.log('It works, do not worry about created error');
+        localStorage.setItem('refreshTime', (new Date().getTime() + 1000 * 60 * 10).toString());
+      })
     }
   }
   useEffect(() => {
@@ -49,7 +52,6 @@ export default function Nav() {
           </filter>
         </defs>
       </svg>
-
     </div>
     <div className="whitespace">
     </div>
