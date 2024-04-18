@@ -5,11 +5,12 @@ import Link from "next/link";
 import { ChangeEvent, FormEvent, useState } from "react";
 import axios, { AxiosResponse } from "axios";
 import { tokenStore } from "store";
+import Client from "@/assets/client";
 
 export default function Login() {
   const [email, setEmail] = useState<string>('')
   const [pw, setPw] = useState<string>('')
-  const { setAccess, setRefresh } = tokenStore(e => e);
+  const { setRefresh } = tokenStore(e => e);
   const TryLogin = async (e: FormEvent) => {
     e.preventDefault();
     var pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // 이메일 정규식
@@ -17,19 +18,22 @@ export default function Login() {
       alert('이메일 형식에 맞게 적어주세요')
       return;
     }
-    axios.post('/api/getToken', {
+    Client.post('/user/account/login', {
       email: email,
       password: pw
     }).then((res: AxiosResponse) => {
-      setAccess(res.data.access)
-      setRefresh(res.data.refresh)
-      localStorage.setItem('access', res.data.access)
-      localStorage.setItem('refresh', res.data.refresh)
+      setRefresh(res.data['refresh_token'])
+      localStorage.setItem('refresh', res.data['refresh_token'])
       localStorage.setItem('refreshTime', (new Date().getTime() + 1000 * 60 * 10).toString())
-      window.location.href = '/console'
+      Client.post('/user/account/login', {
+        email: email,
+        password: pw
+      }, { withCredentials: true }).catch(e => {
+        window.location.href = '/console';
+      })
     }).catch(e => {
+      // console.log(e.response.data)
       alert(e)
-      console.log(e)
     })
   }
   return <div>

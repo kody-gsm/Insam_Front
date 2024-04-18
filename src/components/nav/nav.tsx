@@ -1,42 +1,29 @@
 import { tokenStore } from 'store';
 import './style.scss';
 import Client from '@/assets/client';
-import { useEffect } from 'react';
-import { AxiosResponse } from 'axios';
+import { useEffect, useState } from 'react';
 
 export default function Nav() {
-  const { refresh, setAccess, setRefresh } = tokenStore(e => e);
-  const tokenRefresh = async (): Promise<string> => {
-    return await Client.post('/user/account/refresh', refresh).then((res: AxiosResponse) => {
-      console.log(res.data)
-      return 'string'
-    }).catch(e => {
-      return 'no data'
-    })
+  const { refresh, setRefresh } = tokenStore(e => e);
+  const [time, setTime] = useState<number>(0);
+  const tokenRefresh = async () => {
+    let refreshTime: string = localStorage.getItem('refreshTime');
+    if (!refreshTime || !refresh) {
+      return;
+    }
+    if (new Date().getTime() > parseInt(refreshTime) - 1000 * 10, new Date().getTime()) {
+      Client.post('/user/account/refresh', refresh, { withCredentials: true }).catch(e => { })
+    }
   }
   useEffect(() => {
-    setAccess(localStorage.getItem('access'))
     setRefresh(localStorage.getItem('refresh'))
-    if (typeof window !== 'undefined') {
-      let refreshTime: string = localStorage.getItem('refreshTime');
-      if (!refreshTime) {
-        return;
-      }
-      // console.log(new Date().getTime() > parseInt(refreshTime) - 1000 * 10, new Date().getTime())
-      if (new Date().getTime() > parseInt(refreshTime) - 1000 * 10, new Date().getTime()) {
-        tokenRefresh().then((data: string) => {
-          refreshTime = data;
-          if (refreshTime !== 'no data') {
-            localStorage.setItem('refreshTime', refreshTime);
-          }
-        })
-      }
-      setInterval(() => {
-        console.log(new Date().getTime() > parseInt(refreshTime) - 1000 * 10, new Date().getTime())
-        // if ()
-      }, 10 * 1000)
-    }
-  }, [])
+  }, []);
+  useEffect(() => {
+    setTimeout(() => {
+      tokenRefresh()
+      setTime(e => e + 1);
+    }, 1000 * (time === 0 ? 0 : 30));
+  }, [time])
   return <aside>
     <div className='green'>
     </div>

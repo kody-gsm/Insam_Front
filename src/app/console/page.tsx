@@ -8,7 +8,7 @@ export default function Console() {
   const [editmode, setEditmode] = useState(-1)
   const [popup, setPopup] = useState<boolean>(false);
   if (typeof window !== 'undefined') {
-    if (!localStorage.getItem('access')) {
+    if (!localStorage.getItem('refreshTime')) {
       window.location.href = '/'
     }
   }
