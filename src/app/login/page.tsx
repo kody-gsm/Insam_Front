@@ -3,7 +3,7 @@ import Nav from "@/components/nav/nav";
 import './style.scss'
 import Link from "next/link";
 import { ChangeEvent, FormEvent, useState } from "react";
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import { tokenStore } from "store";
 import Client from "@/assets/client";
 
@@ -31,8 +31,11 @@ export default function Login() {
       }, { withCredentials: true }).catch(e => {
         window.location.href = '/console';
       })
-    }).catch(e => {
-      // console.log(e.response.data)
+    }).catch((e: AxiosError) => {
+      if (e.response.status === 500) {
+        alert('다시 시도 해주세요.')
+        return;
+      }
       alert(e)
     })
   }

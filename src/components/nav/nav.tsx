@@ -6,27 +6,29 @@ import { useEffect, useState } from 'react';
 export default function Nav() {
   const { refresh, setRefresh } = tokenStore(e => e);
   const [time, setTime] = useState<number>(0);
-  const tokenRefresh = async () => {
+  const executeRefresh = (token: string) => {
+    Client.post('/user/account/refresh', token, { withCredentials: true }).catch(e => {
+      console.log('It works, do not worry about created error');
+      localStorage.setItem('refreshTime', (new Date().getTime() + 1000 * 60 * 10).toString());
+    })
+  }
+  const tokenRefresh = () => {
     let refreshTime: string = localStorage.getItem('refreshTime');
     if (!refreshTime || !refresh) {
       return;
     }
     if (new Date().getTime() > parseInt(refreshTime) - 1000 * 30) {
-      Client.post('/user/account/refresh', refresh, { withCredentials: true }).catch(e => {
-        console.log('It works, do not worry about created error');
-        localStorage.setItem('refreshTime', (new Date().getTime() + 1000 * 60 * 10).toString());
-      })
+      executeRefresh(refresh);
     }
   }
   useEffect(() => {
-    setRefresh(localStorage.getItem('refresh'))
-  }, []);
-  useEffect(() => {
     if (!refresh) {
+      setRefresh(localStorage.getItem('refresh'));
+      executeRefresh(localStorage.getItem('refresh'));
       return
     }
+    tokenRefresh()
     setTimeout(() => {
-      tokenRefresh()
       setTime(e => e + 1);
     }, 1000 * (time === 0 ? 0 : 30));
   }, [time, refresh])
