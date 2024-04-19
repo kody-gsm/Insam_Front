@@ -23,7 +23,7 @@ export default function Help() {
   </div>
 }
 
-function QnA({ q, a }) {
+function QnA({ q, a }: { q: string, a: string }) {
   const [open, setOpen] = useState<boolean>(false);
   return <>
     <div className="Q" onClick={() => setOpen((e: boolean) => !e)}>

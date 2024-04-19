@@ -24,7 +24,7 @@ export default function Console({ params }) {
   return <div>
     <Nav />
     <main>
-      <div>
+      <div className='pointer'>
         <Link href={`/console/${id}`}>
           <h3 >
             뒤로가기
