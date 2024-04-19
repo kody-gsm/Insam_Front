@@ -2,7 +2,7 @@
 import Nav from "@/components/nav/nav";
 import './style.scss'
 import { ChangeEvent, useEffect, useState } from "react";
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import Client from "@/assets/client";
 
 export default function Login() {
@@ -13,13 +13,15 @@ export default function Login() {
   const [timer, setTimer] = useState<number>(-1);
   const [pass, setPass] = useState<string>('');
   const edit = async () => {
-    Client.post('/user/account/password', { email: email, password: pass }).then((res: AxiosResponse) => {
-      if (res.status === 200) {
-        window.history.back();
-      }
-    }).catch(e => {
-      console.log(e)
-    })
+    Client.post('/user/account/password', { email: email, password: pass })
+      .then((res: AxiosResponse) => {
+        if (res.status === 200) {
+          window.history.back();
+        }
+      })
+      .catch((e: AxiosError) => {
+        console.log(e)
+      })
   }
   const sendmail = async () => {
     var pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -27,13 +29,15 @@ export default function Login() {
       alert('이메일 형식에 맞게 적어주세요')
       return;
     }
-    await axios.post('/api/verifyingemail', { email }).then((res: AxiosResponse) => {
-      setPass(res.data.code);
-      alert("성공적으로 보내졌습니다.");
-      setTimer(60);
-    }).catch(e => {
-      console.log(e)
-    })
+    await axios.post('/api/verifyingemail', { email })
+      .then((res: AxiosResponse) => {
+        setPass(res.data.code);
+        alert("성공적으로 보내졌습니다.");
+        setTimer(60);
+      })
+      .catch((e: AxiosError) => {
+        console.log(e)
+      })
   }
   const verifying = () => {
     if (pass === number && timer > 0) {
@@ -53,7 +57,7 @@ export default function Login() {
   return <div>
     <Nav />
     <main>
-      {!verified && <><h1> {/*1번 */}
+      {!verified && <><h1> {/*1번 화면 */}
         비밀번호 변경
       </h1>
         <div className="content">
@@ -67,15 +71,15 @@ export default function Login() {
           </div>
           <button onClick={verifying}>인증</button>
         </div></>}
-      {verified && !confirmed && <>
-        <h1>{/*2번 */}
+      {verified && !confirmed && <>{/*2번 화면 */}
+        <h1>
           비밀번호 변경
         </h1>
         <div className="content">
           <h1>이메일이 인증되었습니다.</h1>
           <button onClick={() => setConfirmed(true)}>비밀번호 변경 계속하기</button>
         </div></>}
-      {verified && confirmed && <><h1>{/*3번 */}
+      {verified && confirmed && <><h1>{/*3번 화면*/}
         비밀번호 변경
       </h1>
         <div className="content">

@@ -37,7 +37,7 @@ export default function Console({ params }) {
   const wsURL = `ws://${process.env.NEXT_PUBLIC_WS_URL}/user/cam/${1}`
   const [socket, setSocket] = useState<null | WebSocket>(null);
   const [img, setImg] = useState<string | null>(null);
-  const setTargetWater = async () => {
+  const setTargetWater = () => {
     if (!socket) {
       return;
     }

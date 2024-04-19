@@ -55,14 +55,14 @@ export default function Console() {
   </div>
 }
 
-function Popup({ setPopup }) {
+function Popup({ setPopup }: { setPopup: Function }) {
   const [input, setInput] = useState('')
   const [error, setError] = useState(null)
   return <>
-    <div className="popup" onClick={e => setPopup(false)}>
+    <div className="popup" onClick={() => setPopup(false)}>
     </div>
     <div className="popupcontent">
-      <h2 onClick={e => setPopup(false)}>
+      <h2 onClick={() => setPopup(false)}>
         나가기
       </h2>
       <div className="submit">

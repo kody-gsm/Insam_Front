@@ -2,7 +2,7 @@
 import Nav from "@/components/nav/nav";
 import './style.scss'
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import Client from "@/assets/client";
 
 export default function Login() {
@@ -20,7 +20,7 @@ export default function Login() {
     }).then((res: AxiosResponse) => {
       console.log(res)
       window.location.href = '/login';
-    }).catch(e => {
+    }).catch((e: AxiosError) => {
       alert(e)
       console.log(e)
     })
@@ -35,7 +35,7 @@ export default function Login() {
       setPass(e.data.code);
       setTimer(60);
       alert("성공적으로 보내졌습니다.");
-    }).catch(e => {
+    }).catch((e: AxiosError) => {
       console.log(e)
     })
   }
