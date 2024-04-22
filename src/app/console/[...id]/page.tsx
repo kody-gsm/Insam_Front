@@ -144,11 +144,11 @@ export default function Console({ params }) {
 
 function Popup({ setPopup, list, initNum, setTargetFunc }) {
   const [num, setNum] = useState<plants | number | string>(initNum);
-  const [percent, setPercent] = useState<number>(0);
+  const [percent, setPercent] = useState<number | string>('');
   const Setting = async () => {
     const per = percent || (num === 0 ? 30 : (num === 1 ? 40 : (num === 2 ? 65 : 75)));
     if (num === 'input') {
-      if (percent < 30 || percent > 90) {
+      if (+percent < 30 || +percent > 90) {
         alert("적정 수치에 맞지 않습니다.\n30이상 90이하로 맞춰주세요");
         return
       }
@@ -182,7 +182,9 @@ function Popup({ setPopup, list, initNum, setTargetFunc }) {
       </div>
       <div className='column'>
         <button onClick={Setting}>설정</button>
-        {num === 'input' && <input type='number' onChange={(e: ChangeEvent<HTMLInputElement>) => setPercent(+e.target.value)} min={0} max={80} placeholder='%단위' />}
+        {num === 'input' && <input type='number' value={percent} onChange={(e: ChangeEvent<HTMLInputElement>) => {
+          setPercent(+e.target.value.slice(0, 2) || '')
+        }} placeholder='%단위' />}
       </div>
     </div>
   </>
