@@ -23,8 +23,11 @@ export default function Nav() {
   }
   useEffect(() => {
     if (!refresh) {
-      setRefresh(localStorage.getItem('refresh'));
-      executeRefresh(localStorage.getItem('refresh'));
+      const t = localStorage.getItem('refresh') || null;
+      if (t) {
+        setRefresh(t);
+        executeRefresh(t);
+      }
       return
     }
     tokenRefresh()
@@ -55,7 +58,6 @@ export default function Nav() {
         </defs>
       </svg>
     </div>
-    <div className="whitespace">
-    </div>
+    <div className="whitespace" />
   </aside >
 }
