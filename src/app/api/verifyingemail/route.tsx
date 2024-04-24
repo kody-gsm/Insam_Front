@@ -24,10 +24,15 @@ export async function POST(req: Request, response: Response) {
       Project Insam.
       </div>`
   }
-  await transporter.sendMail(mailOption, (err, info) => {
-    if (err) {
-      console.log(err, 'error at post verifyingemail');
-    }
+  await new Promise((resolve, reject) => {
+    transporter.sendMail(mailOption, (err, info) => {
+      if (err) {
+        console.log(err, 'error at post verifyingemail');
+        reject(err)
+      } else {
+        resolve(info)
+      }
+    });
   })
-  return NextResponse.json({ code: verfifycode })
+  return NextResponse.json({ code: verfifycode });
 }
