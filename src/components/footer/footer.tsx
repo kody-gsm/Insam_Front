@@ -18,6 +18,10 @@ export default function Footer() {
           디자인 도움<br />
           <Link target='_blank' href={'https://github.com/GSMIOTjgh'}>진건희</Link>
         </div>
+        <div>
+          인프라 도움<br />
+          <Link target='_blank' href={'https://github.com/ckfejrdld'}>김유준</Link>
+        </div>
       </div>
     </div>
   </footer>
