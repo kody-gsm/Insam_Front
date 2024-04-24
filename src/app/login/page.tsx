@@ -3,7 +3,7 @@ import Nav from "@/components/nav/nav";
 import './style.scss'
 import Link from "next/link";
 import { ChangeEvent, FormEvent, useState } from "react";
-import axios, { AxiosError, AxiosResponse } from "axios";
+import { AxiosError, AxiosResponse } from "axios";
 import { tokenStore } from "store";
 import Client from "@/assets/client";
 
@@ -25,13 +25,8 @@ export default function Login() {
       setRefresh(res.data['refresh_token'])
       localStorage.setItem('refresh', res.data['refresh_token'])
       document.cookie = `refresh=${res.data['refresh_token']}`;
-      localStorage.setItem('refreshTime', (new Date().getTime() + 1000 * 60 * 10).toString())
-      Client.post('/user/account/login', {
-        email: email,
-        password: pw
-      }, { withCredentials: true }).catch(e => {
-        window.location.href = '/console';
-      })
+      localStorage.setItem('refreshTime', (new Date().getTime() + 1000 * 60 * 10).toString());
+      window.location.href = '/console';
     }).catch((e: AxiosError) => {
       if (e.response.status === 500) {
         alert('다시 시도 해주세요.')

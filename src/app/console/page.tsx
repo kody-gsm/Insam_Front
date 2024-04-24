@@ -25,8 +25,8 @@ export default function Console() {
     <main>
       <div>
         <h3 onClick={e => {
-          localStorage.clear();
           document.cookie = '';
+          localStorage.clear();
           window.location.href = '/';
         }}>
           로그아웃

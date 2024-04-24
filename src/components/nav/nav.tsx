@@ -10,6 +10,10 @@ export default function Nav() {
     Client.post('/user/account/refresh', token, { withCredentials: true }).catch(e => {
       console.log('It works, do not worry about created error');
       localStorage.setItem('refreshTime', (new Date().getTime() + 1000 * 60 * 10).toString());
+    }).finally(() => {
+      setTimeout(() => {
+        setTime(e => e + 1);
+      }, 1000 * (time === 0 ? 0 : 10));
     })
   }
   const tokenRefresh = () => {
@@ -31,9 +35,6 @@ export default function Nav() {
       return
     }
     tokenRefresh()
-    setTimeout(() => {
-      setTime(e => e + 1);
-    }, 1000 * (time === 0 ? 0 : 30));
   }, [time, refresh])
   return <aside>
     <div className='green'>
