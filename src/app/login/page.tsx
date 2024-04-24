@@ -24,6 +24,7 @@ export default function Login() {
     }).then((res: AxiosResponse) => {
       setRefresh(res.data['refresh_token'])
       localStorage.setItem('refresh', res.data['refresh_token'])
+      document.cookie = `refresh=${res.data['refresh_token']}`;
       localStorage.setItem('refreshTime', (new Date().getTime() + 1000 * 60 * 10).toString())
       Client.post('/user/account/login', {
         email: email,
@@ -34,6 +35,10 @@ export default function Login() {
     }).catch((e: AxiosError) => {
       if (e.response.status === 500) {
         alert('다시 시도 해주세요.')
+        return;
+      }
+      if (e.response.status === 401) {
+        alert('아이디나 비밀번호가 맞지 않습니다.')
         return;
       }
       alert(e)

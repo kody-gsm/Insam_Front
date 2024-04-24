@@ -9,7 +9,7 @@ export default function Console() {
   const [popup, setPopup] = useState<boolean>(false);
   if (typeof window !== 'undefined') {
     if (!localStorage.getItem('refreshTime')) {
-      window.location.href = '/'
+      // window.location.href = '/'
     }
   }
   const EditName = (id: number, text: string) => {
@@ -26,6 +26,7 @@ export default function Console() {
       <div>
         <h3 onClick={e => {
           localStorage.clear();
+          document.cookie = '';
           window.location.href = '/';
         }}>
           로그아웃
