@@ -50,33 +50,42 @@ export default function Console({ params }) {
     }))
   }
   useEffect(() => {
-    if (!socket) {
-      return;
-    }
-    socket.onopen = () => {
-      console.log("WebSocket connection opened");
-    };
-    socket.onmessage = (event) => {
-      console.log(JSON.parse(event.data));
-      // if (JSON.parse(event.data)['type'] === 'image') {
-      //   setImg(`data:image/png;base64,${JSON.parse(event.data)['message']}`);
-      // }
-    };
-    socket.onclose = () => {
-      console.log("WebSocket connection closed");
-    };
-    socket.onerror = (error) => {
-      console.error("WebSocket error:", error);
-    };
-    return () => {
-      socket.close()
+    try {
+      if (!socket) {
+        return;
+      }
+      socket.onopen = () => {
+        console.log("WebSocket connection opened");
+      };
+      socket.onmessage = (event) => {
+        console.log(JSON.parse(event.data));
+        // if (JSON.parse(event.data)['type'] === 'image') {
+        //   setImg(`data:image/png;base64,${JSON.parse(event.data)['message']}`);
+        // }
+      };
+      socket.onclose = () => {
+        console.log("WebSocket connection closed");
+      };
+      socket.onerror = (error) => {
+        console.error("WebSocket error:", error);
+      };
+      return () => {
+        socket.close()
+      }
+    } catch (e) {
+      console.log(e)
     }
   }, [socket])
   useEffect(() => {
-    const websocket = new WebSocket(wsURL);
-    setSocket(websocket);
-    return () => {
-      websocket.close()
+    try {
+
+      const websocket = new WebSocket(wsURL);
+      setSocket(websocket);
+      return () => {
+        websocket.close()
+      }
+    } catch (e) {
+      console.log(e)
     }
   }, [])
   return <div>
