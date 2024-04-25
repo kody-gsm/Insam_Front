@@ -2,19 +2,25 @@ import { tokenStore } from 'store';
 import './style.scss';
 import Client from '@/assets/client';
 import { useEffect, useState } from 'react';
+import { AxiosError, AxiosResponse } from 'axios';
+import { access } from 'fs';
 
 export default function Nav() {
-  const { refresh, setRefresh } = tokenStore(e => e);
+  const { refresh, setRefresh, setAccess } = tokenStore(e => e);
   const [time, setTime] = useState<number>(0);
   const executeRefresh = (token: string) => {
-    Client.post('/user/account/refresh', token, { withCredentials: true }).catch(e => {
-      console.log('It works, do not worry about created error');
-      localStorage.setItem('refreshTime', (new Date().getTime() + 1000 * 60 * 10).toString());
-    }).finally(() => {
-      setTimeout(() => {
-        setTime(e => e + 1);
-      }, 1000 * (time === 0 ? 0 : 10));
-    })
+    Client.post('/user/account/refresh', token)
+      .then((e: AxiosResponse) => {
+        setAccess(e.data['access_token'])
+        localStorage.setItem('refreshTime', (new Date().getTime() + 1000 * 60 * 10).toString());
+      })
+      .catch((e: AxiosError) => {
+        console.log(e)
+      }).finally(() => {
+        setTimeout(() => {
+          setTime(e => e + 1);
+        }, 1000 * (time === 0 ? 0 : 10));
+      })
   }
   const tokenRefresh = () => {
     let refreshTime: string = localStorage.getItem('refreshTime');
