@@ -134,10 +134,21 @@ main {
   }
 
   .edit {
+    display: flex;
+    flex-direction: column;
+
+    .del {
+      font-size: 35px;
+      color: black;
+      font-weight: bolder;
+    }
+
     button {
       background-color: white;
       border-radius: 10px;
       padding: 5px;
+      // width: 45px;
+      // height: 45px;
       cursor: pointer;
 
       &:hover {

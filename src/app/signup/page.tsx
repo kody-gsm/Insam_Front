@@ -65,7 +65,7 @@ export default function Login() {
           <b>이메일</b>
           <input type="email" value={email} onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)} placeholder="이메일을 적어주세요" />
           <b>인증번호</b>
-          <input value={number} onChange={(e: ChangeEvent<HTMLInputElement>) => setNumber(e.target.value)} placeholder="인증번호를 적어주세요" />
+          <input value={number} type="number" onChange={(e: ChangeEvent<HTMLInputElement>) => setNumber(e.target.value)} placeholder="인증번호를 적어주세요" />
           <div className="flex">
             {timer >= 0 && <span>남은 시간 {timer}초</span>}
             <span className="button" onClick={sendmail}>보내기</span>
@@ -88,7 +88,7 @@ export default function Login() {
         </h1>
         <div className="content">
           <b>비밀번호</b>
-          <input value={pass} onChange={(e: ChangeEvent<HTMLInputElement>) => setPass(e.target.value)} placeholder="비밀번호를 적어주세요" />
+          <input value={pass} type="password" onChange={(e: ChangeEvent<HTMLInputElement>) => setPass(e.target.value)} placeholder="비밀번호를 적어주세요" />
           <button onClick={register}>회원가입</button>
         </div>
       </>}
