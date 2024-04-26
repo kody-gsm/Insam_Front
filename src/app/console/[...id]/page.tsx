@@ -22,6 +22,9 @@ export default function Console({ params }) {
   const [soil, setSoil] = useState<number>(20);
   const [water, setWater] = useState<number>(20);
   const [targetSoil, setTargetSoil] = useState<number>(30)
+
+  const [socket, setSocket] = useState<null | WebSocket>(null);
+  const [img, setImg] = useState<string | null>(null);
   const list = [
     new plants(30, '다육이'),
     new plants(40, '케일'),
@@ -34,58 +37,85 @@ export default function Console({ params }) {
   const setTargetFunc = (target: number) => {
     setTargetSoil(target);
   }
-  const wsURL = `ws://${process.env.NEXT_PUBLIC_WS_URL}/user/cam/${1}`
-  const [socket, setSocket] = useState<null | WebSocket>(null);
-  const [img, setImg] = useState<string | null>(null);
-  const setTargetWater = () => {
+  const wsURL = `ws://${process.env.NEXT_PUBLIC_WS_URL}/user/pot/${id}/`
+  const requestData = (key: string) => {
     if (!socket) {
       return;
+    }
+    let message: string = '';
+    switch (key) {
+      case 'dht':
+        message = 's1';
+        break;
+      case 'soil':
+        message = 's2';
+        break;
+      case 'water':
+        message = 's3';
+        break;
+      case 'cam':
+        message = 's4';
+        break;
+      case 'cam_stream':
+        message = 's4stream';
+        break;
+      case 'cam_stop':
+        message = 's4stop';
+        break;
+      default:
+        return;
     }
     socket.send(JSON.stringify({
       header: {
         'Authorization': 'asdfasdf'
       },
       type: 'test_message',
-      message: ''
+      message: message
     }))
   }
   useEffect(() => {
-    try {
-      if (!socket) {
-        return;
-      }
-      socket.onopen = () => {
-        console.log("WebSocket connection opened");
-      };
-      socket.onmessage = (event) => {
-        console.log(JSON.parse(event.data));
-        // if (JSON.parse(event.data)['type'] === 'image') {
-        //   setImg(`data:image/png;base64,${JSON.parse(event.data)['message']}`);
-        // }
-      };
-      socket.onclose = () => {
-        console.log("WebSocket connection closed");
-      };
-      socket.onerror = (error) => {
-        console.error("WebSocket error:", error);
-      };
-      return () => {
+    // try {
+    if (!socket) {
+      return;
+    }
+    socket.onopen = () => {
+      console.log("WebSocket connection opened");
+      requestData('dht');
+      requestData('soil');
+      requestData('water');
+      requestData('cam');
+      requestData('cam_stream');
+      requestData('cam_stop');
+    };
+    socket.onmessage = (event) => {
+      console.log(JSON.parse(event.data));
+      // if (JSON.parse(event.data)['type'] === 'image') {
+      //   setImg(`data:image/png;base64,${JSON.parse(event.data)['message']}`);
+      // }
+    };
+    socket.onclose = () => {
+      console.log("WebSocket connection closed");
+    };
+    socket.onerror = (error) => {
+      console.error("WebSocket error:", error);
+    };
+    return () => {
+      if (socket.readyState === 1) {
         socket.close()
       }
-    } catch (e) {
-      console.log(e)
     }
+    // } catch (e) {
+    //   console.log(e)
+    // }
   }, [socket])
   useEffect(() => {
-    try {
-
-      const websocket = new WebSocket(wsURL);
-      setSocket(websocket);
-      return () => {
+    console.log(wsURL)
+    const websocket = new WebSocket(wsURL, "echo-protocol");
+    setSocket(websocket);
+    return () => {
+      if (websocket.readyState === 1) {
         websocket.close()
       }
-    } catch (e) {
-      console.log(e)
     }
   }, [])
   return <div>
