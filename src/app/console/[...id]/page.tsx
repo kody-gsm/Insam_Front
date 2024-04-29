@@ -3,6 +3,7 @@ import Nav from '@/components/nav/nav';
 import './style.scss';
 import Link from 'next/link';
 import { ChangeEvent, useEffect, useState } from 'react';
+import { tokenStore } from 'store';
 
 class plants {
   preferSoil: number;
@@ -15,6 +16,7 @@ class plants {
 
 export default function Console({ params }) {
   const { id } = params;
+  const { access } = tokenStore(e => e);
   const [light, setLight] = useState<boolean>(true);
   const [popup, setPopup] = useState<boolean>(false);
   const [temp, setTemp] = useState<number>(20);
@@ -22,8 +24,7 @@ export default function Console({ params }) {
   const [soil, setSoil] = useState<number>(20);
   const [water, setWater] = useState<number>(20);
   const [targetSoil, setTargetSoil] = useState<number>(30)
-
-  const [socket, setSocket] = useState<null | WebSocket>(null);
+  const [socket, setSocket] = useState<undefined | WebSocket>();
   const [img, setImg] = useState<string | null>(null);
   const list = [
     new plants(30, '다육이'),
@@ -37,7 +38,7 @@ export default function Console({ params }) {
   const setTargetFunc = (target: number) => {
     setTargetSoil(target);
   }
-  const wsURL = `ws://${process.env.NEXT_PUBLIC_WS_URL}/user/pot/${id}/`
+  const wsURL = `ws://${process.env.NEXT_PUBLIC_WS_URL}/user/pot/${id}`
   const requestData = (key: string) => {
     if (!socket) {
       return;
@@ -65,27 +66,20 @@ export default function Console({ params }) {
       default:
         return;
     }
-    socket.send(JSON.stringify({
-      header: {
-        'Authorization': 'asdfasdf'
-      },
-      type: 'test_message',
-      message: message
-    }))
+    socket.send(message)
   }
   useEffect(() => {
-    // try {
     if (!socket) {
       return;
     }
     socket.onopen = () => {
       console.log("WebSocket connection opened");
-      requestData('dht');
-      requestData('soil');
-      requestData('water');
-      requestData('cam');
-      requestData('cam_stream');
-      requestData('cam_stop');
+      socket.send(access);
+      // requestData('dht');
+      // requestData('soil');
+      // requestData('water');
+      // requestData('cam_stream');
+      // requestData('cam');
     };
     socket.onmessage = (event) => {
       console.log(JSON.parse(event.data));
@@ -93,31 +87,26 @@ export default function Console({ params }) {
       //   setImg(`data:image/png;base64,${JSON.parse(event.data)['message']}`);
       // }
     };
-    socket.onclose = () => {
+    socket.onclose = (e: CloseEvent) => {
+      // requestData('cam_stop');
       console.log("WebSocket connection closed");
     };
     socket.onerror = (error) => {
       console.error("WebSocket error:", error);
     };
-    return () => {
-      if (socket.readyState === 1) {
-        socket.close()
-      }
-    }
-    // } catch (e) {
-    //   console.log(e)
-    // }
   }, [socket])
   useEffect(() => {
-    console.log(wsURL)
-    const websocket = new WebSocket(wsURL, "echo-protocol");
+    if (!access) {
+      return;
+    }
+    const websocket = new WebSocket(wsURL);
     setSocket(websocket);
     return () => {
-      if (websocket.readyState === 1) {
+      if (websocket.readyState === WebSocket.OPEN) {
         websocket.close()
       }
     }
-  }, [])
+  }, [access])
   return <div>
     {popup && <Popup setPopup={setPopup} setTargetFunc={setTargetFunc} list={list} initNum={0} />}
     <Nav />
@@ -154,7 +143,7 @@ export default function Console({ params }) {
         </div>
         <div className='seconds'>
           <div className='img'>
-            <img src={img || 'https://i.pinimg.com/originals/80/2a/62/802a62c6515f83bdee0e8f0ef1a7c68c.jpg'} alt='no camera' />
+            <img src={img || 'https://i.pinimg.com/originals/80/2a/62/802a62c6515f83bdee0e8f0ef1a7c68c.jpg'} alt='cam' />
           </div>
           <div className='nodes'>
             <div className='node'>
