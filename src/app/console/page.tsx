@@ -10,8 +10,9 @@ import { tokenStore } from "store";
 interface PotInterface {
   pot_code: string,
   pot_name: string,
-  pot_status?: boolean
+  is_active?: boolean
 }
+
 export default function Console() {
   const { access } = tokenStore(e => e);
   const [editmode, setEditmode] = useState(-1)
@@ -80,7 +81,7 @@ export default function Console() {
             code={i.pot_code}
             editname={EditName}
             link={`/console/${i.pot_code}`}
-            name={i.pot_name} status={i?.pot_status}
+            name={i.pot_name} status={i?.is_active}
             editmode={editmode} setEditmode={setEditmode}
             delfunction={delPot}
           />
