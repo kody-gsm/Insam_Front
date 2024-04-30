@@ -21,6 +21,10 @@ export default function Login() {
       console.log(res)
       window.location.href = '/login';
     }).catch((e: AxiosError) => {
+      if (e.response.status === 409) {
+        alert('이미 있는 계정입니다.');
+        return;
+      }
       alert(e)
       console.log(e)
     })

@@ -109,6 +109,10 @@ function Popup({ setPopup }: { setPopup: Function }) {
       setError('');
       setPopup(false);
     }).catch((e: AxiosError) => {
+      if (e.response.status === 404) {
+        setError('화분이 등록되지 않았거나 없는 화분입니다.')
+        return;
+      }
       console.log(e)
       setError(e.message)
     })
