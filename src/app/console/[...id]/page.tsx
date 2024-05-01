@@ -81,7 +81,7 @@ export default function Console({ params }) {
       // requestData('cam_stream');
       // requestData('cam');
     };
-    socket.onmessage = (event) => {
+    socket.onmessage = (event: MessageEvent) => {
       console.log(JSON.parse(event.data));
       // if (JSON.parse(event.data)['type'] === 'image') {
       //   setImg(`data:image/png;base64,${JSON.parse(event.data)['message']}`);
@@ -90,8 +90,9 @@ export default function Console({ params }) {
     socket.onclose = (e: CloseEvent) => {
       // requestData('cam_stop');
       console.log("WebSocket connection closed");
+      alert(e.reason)
     };
-    socket.onerror = (error) => {
+    socket.onerror = (error: ErrorEvent) => {
       console.error("WebSocket error:", error);
     };
   }, [socket])

@@ -29,6 +29,7 @@ export default function Login() {
       localStorage.setItem('refreshTime', (new Date().getTime() + 1000 * 60 * 10).toString());
       window.location.href = '/console';
     }).catch((e: AxiosError) => {
+      console.log(e)
       if (e.response.status === 500) {
         alert('다시 시도 해주세요.')
         return;
