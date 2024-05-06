@@ -6,8 +6,11 @@ footer {
   display: flex;
   align-items: center;
   justify-content: left;
-  // transform: translateY(-100%);
   padding: 5px 20svw;
+
+  @media screen and (max-width: 768px) {
+    padding: 5px 10px;
+  }
 
   .turn {
     margin-top: px;
