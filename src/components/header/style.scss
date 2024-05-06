@@ -1,24 +1,62 @@
 header {
-  margin: auto;
-  width: 100svw;
-  padding: 5px 20svw;
-  font-size: 17px;
-  display: flex;
-  justify-content: space-between;
-  background-color: #98DD9B;
-  align-items: center;
+  .inner {
+    margin: auto;
+    width: 100svw;
+    padding: 5px 20svw;
+    font-size: 17px;
+    display: flex;
+    justify-content: space-between;
+    background-color: #98DD9B;
+    align-items: center;
 
-  .login {
-    background-color: white;
-    padding: 5px 50px;
-    border-radius: 100px;
+    @media screen and (max-width: 768px) {
+      width: auto;
+      padding: 5px 10px;
+    }
 
-    &:hover {
-      background-color: darken(white, 10%);
+    .login {
+      background-color: white;
+      padding: 5px 50px;
+      border-radius: 100px;
+
+      @media screen and (max-width: 768px) {
+        // padding: 5px 10px;
+      }
+
+      &:hover {
+        background-color: darken(white, 10%);
+      }
+    }
+
+    .hams {
+      display: flex;
+      cursor: pointer;
+      height: 30px;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: 0.2s ease all;
+
+      .ham {
+        width: 30px;
+        border-radius: 100px;
+        border: 3px solid black;
+      }
+
+    }
+
+    .act {
+      transform: rotate(90deg);
+    }
+
+    .insam {
+      margin-top: 10px;
     }
   }
 
-  .insam {
-    margin-top: 10px;
+  .togglemenu {
+    background-color: #98DD9B;
+    display: flex;
+    justify-content: space-around;
+    padding-bottom: 10px;
   }
 }
