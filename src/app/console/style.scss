@@ -14,8 +14,9 @@ main {
   justify-content: left;
 
   @media screen and (max-width: 768px) {
+    // position: relative;
     width: 90svw;
-    top: 10svh;
+    top: 12svh;
     flex-direction: column;
     padding: 30px;
   }
@@ -201,8 +202,13 @@ main {
   margin-left: -25svw;
   margin-top: -25svh;
   background-color: white;
-
   justify-content: space-between;
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+    width: 80svw;
+    margin-left: -40svw;
+  }
 
   h2 {
     color: gray;
@@ -229,6 +235,10 @@ main {
       border: 1px solid gray;
       border-radius: 20px;
       padding: 10px 20px;
+
+      @media screen and (max-width: 768px) {
+        width: auto;
+      }
     }
 
     .error {

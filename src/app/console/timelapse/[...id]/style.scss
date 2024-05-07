@@ -13,6 +13,14 @@ main {
   padding-bottom: 0;
   justify-content: left;
 
+  @media screen and (max-width: 768px) {
+    // position: relative;
+    width: 90svw;
+    top: 12svh;
+    flex-direction: column;
+    padding: 30px;
+  }
+
   h3 {
     color: gray;
     cursor: pointer;
@@ -33,6 +41,11 @@ main {
     flex-direction: column;
     align-items: center;
     overflow-y: auto;
+
+    @media screen and (max-width: 768px) {
+      margin: 50px 0;
+      width: auto;
+    }
 
     &::-webkit-scrollbar {
       // display: none;
@@ -82,12 +95,17 @@ main {
 
     .second {
       width: calc(100% - 10svw);
-      // height: calc(100% - 220px);
       height: 30svw;
       margin-top: 12svh;
       position: absolute;
       left: 100px;
       justify-content: space-between;
+
+      @media screen and (max-width: 768px) {
+        margin-top: 2svh;
+        left: 50%;
+        margin-left: calc(5svw - 50%);
+      }
 
       .nodes {
         display: flex;
@@ -125,6 +143,12 @@ main {
               min-height: 48svh;
               background-color: lightgray;
               border-radius: 20px;
+
+              @media screen and (max-width: 768px) {
+
+                min-width: 64svw;
+                min-height: 48svw;
+              }
             }
           }
         }

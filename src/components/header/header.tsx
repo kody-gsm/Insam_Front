@@ -11,7 +11,9 @@ export default function Header() {
   const [toggle, setToggle] = useState<boolean>(false);
   useEffect(() => {
     setWid(window.innerWidth);
-    setRefresh(document.cookie.split('refresh=')[1].split(';')[0])
+    if (document.cookie) {
+      setRefresh(document.cookie.split('refresh=')[1].split(';')[0])
+    }
     if (typeof window !== 'undefined') {
       window.addEventListener('resize', () => {
         setWid(window.innerWidth);
