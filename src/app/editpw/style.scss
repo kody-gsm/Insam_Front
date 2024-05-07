@@ -11,12 +11,25 @@ main {
   padding: 70px 100px;
   justify-content: left;
 
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+    padding: 30px;
+    left: 5svw;
+    width: auto;
+    top: 12svh;
+  }
+
   .content {
     margin-left: 100px;
     margin-top: 50px;
     display: flex;
     width: 40svw;
     flex-direction: column;
+
+    @media screen and (max-width: 768px) {
+      margin-left: 30px;
+      width: auto;
+    }
 
     // align-items: center;
     .flex {
@@ -46,6 +59,10 @@ main {
       border-radius: 400px;
       padding: 0 20px;
       margin-bottom: 80px;
+
+      @media screen and (max-width: 768px) {
+        width: auto;
+      }
     }
 
     button {

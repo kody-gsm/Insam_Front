@@ -75,6 +75,11 @@ export default function Console({ params }) {
     socket.onopen = () => {
       console.log("WebSocket connection opened");
       socket.send(access);
+      socket.send('t2:stream')
+      setTimeout(() => {
+        socket.send('t2:stop')
+      }, 5000);
+
       // requestData('dht');
       // requestData('soil');
       // requestData('water');
@@ -82,7 +87,7 @@ export default function Console({ params }) {
       // requestData('cam');
     };
     socket.onmessage = (event: MessageEvent) => {
-      console.log(JSON.parse(event.data));
+      console.log(event.data);
       // if (JSON.parse(event.data)['type'] === 'image') {
       //   setImg(`data:image/png;base64,${JSON.parse(event.data)['message']}`);
       // }

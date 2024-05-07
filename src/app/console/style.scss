@@ -13,6 +13,14 @@ main {
   padding-bottom: 0;
   justify-content: left;
 
+  @media screen and (max-width: 768px) {
+    // position: relative;
+    width: 90svw;
+    top: 12svh;
+    flex-direction: column;
+    padding: 30px;
+  }
+
   h3 {
     color: gray;
     cursor: pointer;
@@ -35,6 +43,11 @@ main {
     flex-direction: column;
     align-items: center;
     overflow-y: auto;
+
+    @media screen and (max-width: 768px) {
+      margin: 50px 0;
+      width: auto;
+    }
 
     &::-webkit-scrollbar {
       width: 30px;
@@ -83,6 +96,11 @@ main {
   justify-content: space-between;
   align-items: center;
 
+  @media screen and (max-width: 768px) {
+    padding: 20px;
+    border-radius: 20px;
+  }
+
   .flex {
     display: flex;
   }
@@ -93,7 +111,7 @@ main {
     input {
       background-color: white;
       color: black;
-      width: 400px;
+      width: 30svw;
     }
 
     a {
@@ -184,8 +202,13 @@ main {
   margin-left: -25svw;
   margin-top: -25svh;
   background-color: white;
-
   justify-content: space-between;
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+    width: 80svw;
+    margin-left: -40svw;
+  }
 
   h2 {
     color: gray;
@@ -212,6 +235,10 @@ main {
       border: 1px solid gray;
       border-radius: 20px;
       padding: 10px 20px;
+
+      @media screen and (max-width: 768px) {
+        width: auto;
+      }
     }
 
     .error {
