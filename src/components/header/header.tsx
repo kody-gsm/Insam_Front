@@ -3,15 +3,21 @@ import Insam from '@/assets/insam';
 import './style.scss';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { tokenStore, widthStore } from 'store';
 
 export default function Header() {
-  const [wid, setWid] = useState<null | number>(null);
+  const { wid, setWid } = widthStore(e => e);
+  const { refresh, setRefresh } = tokenStore(e => e);
   const [toggle, setToggle] = useState<boolean>(false);
-  if (typeof window !== 'undefined') {
-    window.addEventListener('resize', () => {
-      setWid(window.innerWidth);
-    })
-  }
+  useEffect(() => {
+    setWid(window.innerWidth);
+    setRefresh(document.cookie.split('refresh=')[1].split(';')[0])
+    if (typeof window !== 'undefined') {
+      window.addEventListener('resize', () => {
+        setWid(window.innerWidth);
+      })
+    }
+  }, [])
   return <header>
     <div className='inner'>
       <Insam />
@@ -21,7 +27,18 @@ export default function Header() {
         <Link href={'/help'}>도움말</Link>
       </>
       }
-      <Link className="login" href={'/login'}>로그인{wid > 768 && '/회원가입하기'}</Link>
+      {(!refresh || wid > 768) ?
+        <Link className="login" href={'/login'}>
+          로그인{wid > 768 && '/회원가입하기'}</Link> : <>
+          <Link href={'/console'}>
+            <span className='but'>콘솔로</span>
+          </Link>
+          <span className='but' onClick={() => {
+            document.cookie = 'refresh=; expires=Thu, 01 Jan 1970 00:00:01 GMT';
+            localStorage.clear();
+            window.location.href = '/';
+          }}>로그아웃</span>
+        </>}
       {wid <= 768 && <div onClick={() => setToggle((e: boolean) => !e)} className={`hams ${toggle && 'act'}`}>
         <div className='ham' />
         <div className='ham' />

@@ -10,7 +10,7 @@ header {
     align-items: center;
 
     @media screen and (max-width: 768px) {
-      width: auto;
+      width: 100svw;
       padding: 5px 10px;
     }
 
@@ -50,6 +50,10 @@ header {
 
     .insam {
       margin-top: 10px;
+    }
+
+    .but {
+      cursor: pointer;
     }
   }
 
