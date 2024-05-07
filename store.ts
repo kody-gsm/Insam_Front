@@ -16,3 +16,13 @@ export const tokenStore = create<token>((set) => ({
     set((state) => ({ access: ref }));
   }
 }));
+
+interface windowInnerWidth {
+  wid: null | number,
+  setWid: (wid: number) => void
+}
+
+export const widthStore = create<windowInnerWidth>((set) => ({
+  wid: null,
+  setWid: (w) => set((state) => ({ wid: w }))
+}))
