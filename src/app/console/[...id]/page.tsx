@@ -58,10 +58,10 @@ export default function Console({ params }) {
         message = 's4';
         break;
       case 'cam_stream':
-        message = 's4stream';
+        message = 's4:stream';
         break;
       case 'cam_stop':
-        message = 's4stop';
+        message = 's4:stop';
         break;
       default:
         return;
@@ -75,22 +75,24 @@ export default function Console({ params }) {
     socket.onopen = () => {
       console.log("WebSocket connection opened");
       socket.send(access);
-      socket.send('t2:stream')
-      setTimeout(() => {
-        socket.send('t2:stop')
-      }, 5000);
+      // requestData("cam_stream")
+      requestData('dht');
+      // setTimeout(() => {
+      //   requestData("cam_stop")
+      // }, 5000);
 
-      // requestData('dht');
       // requestData('soil');
       // requestData('water');
-      // requestData('cam_stream');
-      // requestData('cam');
     };
     socket.onmessage = (event: MessageEvent) => {
-      console.log(event.data);
-      // if (JSON.parse(event.data)['type'] === 'image') {
-      //   setImg(`data:image/png;base64,${JSON.parse(event.data)['message']}`);
-      // }
+      const type: string = event.data.split(':')[0];
+      const data: string = event.data.split(':')[1];
+      console.log(type)
+      if (type === 's4' && data !== 'stop') {
+        setImg(`data:image/jpg;base64,${data}`)
+        return;
+      }
+      console.log(data)
     };
     socket.onclose = (e: CloseEvent) => {
       // requestData('cam_stop');
