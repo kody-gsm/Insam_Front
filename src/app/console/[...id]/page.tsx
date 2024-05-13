@@ -4,6 +4,7 @@ import './style.scss';
 import Link from 'next/link';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { tokenStore } from 'store';
+import Client from '@/assets/client';
 
 class plants {
   preferSoil: number;
@@ -76,7 +77,11 @@ export default function Console({ params }) {
       console.log("WebSocket connection opened");
       socket.send(access);
       // requestData("cam_stream")
-      requestData('dht');
+      // setInterval(() => {
+      //   if (socket.OPEN) {
+      //     requestData('dht');
+      //   }
+      // }, 1000)
       // setTimeout(() => {
       //   requestData("cam_stop")
       // }, 5000);
@@ -87,12 +92,23 @@ export default function Console({ params }) {
     socket.onmessage = (event: MessageEvent) => {
       const type: string = event.data.split(':')[0];
       const data: string = event.data.split(':')[1];
-      console.log(type)
+      // console.log(event.data)
       if (type === 's4' && data !== 'stop') {
         setImg(`data:image/jpg;base64,${data}`)
         return;
       }
-      console.log(data)
+      if (type === 's1') { //dht
+        let d = data.replace(/\(/g, '').replace(/\)/g, '').split(',');
+        setTemp(+d[0]);
+        setHumi(+d[1]);
+      }
+      if (type === 's2') { //soil
+        setSoil(+data);
+      }
+      if (type === 's3') { //water
+        setWater(+data);
+      }
+      // console.log(event.data)
     };
     socket.onclose = (e: CloseEvent) => {
       // requestData('cam_stop');
@@ -108,6 +124,7 @@ export default function Console({ params }) {
       return;
     }
     const websocket = new WebSocket(wsURL);
+    // asdf();
     setSocket(websocket);
     return () => {
       if (websocket.readyState === WebSocket.OPEN) {
@@ -115,6 +132,13 @@ export default function Console({ params }) {
       }
     }
   }, [access])
+  // async function asdf() {
+  //   await Client.get('image-add').then(e => {
+  //     console.log(e)
+  //   }).catch(e => {
+  //     console.log(e)
+  //   })
+  // }
   return <div>
     {popup && <Popup setPopup={setPopup} setTargetFunc={setTargetFunc} list={list} initNum={0} />}
     <Nav />
