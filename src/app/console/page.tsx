@@ -52,6 +52,7 @@ export default function Console() {
     //변경 값 보내기
     if (access && !popup) {
       getPots();
+      getPots();
     }
   }, [editmode, access, popup])
   return <div>
