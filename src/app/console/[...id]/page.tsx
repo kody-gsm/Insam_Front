@@ -35,12 +35,16 @@ export default function Console({ params }) {
   ]
   const SetLightFunc = () => {
     setLight((e: boolean) => !e);
+    requestData(light ? 'led_off' : 'led_on');
   }
   const setTargetFunc = (target: number) => {
     setTargetSoil(target);
   }
   const wsURL = `ws://${process.env.NEXT_PUBLIC_WS_URL}/user/pot/${id}`
-  const requestData = (key: string) => {
+  const requestData = (key: 'dht' |
+    'soil' | 'water' | 'cam' |
+    'led_on' | 'led_off' | 'cam_stream' |
+    'cam_stop' | string) => {
     if (!socket) {
       return;
     }
@@ -57,6 +61,12 @@ export default function Console({ params }) {
         break;
       case 'cam':
         message = 's4';
+        break;
+      case 'led_on':
+        message = 'c1:True';
+        break;
+      case 'led_off':
+        message = 'c1:False';
         break;
       case 'cam_stream':
         message = 's4:stream';
@@ -98,7 +108,7 @@ export default function Console({ params }) {
         return;
       }
       if (type === 's1') { //dht
-        let d = data.replace(/\(/g, '').replace(/\)/g, '').split(',');
+        let d: string[] = data.replace(/\(/g, '').replace(/\)/g, '').split(',');
         setTemp(+d[0]);
         setHumi(+d[1]);
       }
@@ -108,10 +118,8 @@ export default function Console({ params }) {
       if (type === 's3') { //water
         setWater(+data);
       }
-      // console.log(event.data)
     };
     socket.onclose = (e: CloseEvent) => {
-      // requestData('cam_stop');
       console.log("WebSocket connection closed");
       alert(e.reason)
     };
@@ -124,21 +132,13 @@ export default function Console({ params }) {
       return;
     }
     const websocket = new WebSocket(wsURL);
-    // asdf();
     setSocket(websocket);
     return () => {
       if (websocket.readyState === WebSocket.OPEN) {
         websocket.close()
       }
     }
-  }, [access])
-  // async function asdf() {
-  //   await Client.get('image-add').then(e => {
-  //     console.log(e)
-  //   }).catch(e => {
-  //     console.log(e)
-  //   })
-  // }
+  }, [access]);
   return <div>
     {popup && <Popup setPopup={setPopup} setTargetFunc={setTargetFunc} list={list} initNum={0} />}
     <Nav />
