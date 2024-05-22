@@ -2,7 +2,10 @@
 import Nav from '@/components/nav/nav';
 import './style.scss';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { tokenStore } from 'store';
+import Client from '@/assets/client';
+import { AxiosError, AxiosResponse } from 'axios';
 
 class ImgStatus {
   time: string;
@@ -21,6 +24,22 @@ export default function Console({ params }) {
   const [index, setIndex] = useState<number>(0)
   const [startDate, setStartDate] = useState<string>('2024-05-01');
   const [lastDate, setLastDate] = useState<string>('2024-05-10');
+  const { access } = tokenStore(e => e);
+  const GetImgs = async () => {
+    if (!access) {
+      return;
+    }
+    Client.get(`/user/image/${id}`, { headers: { 'access_token': access } })
+      .then((e: AxiosResponse) => {
+        console.log(e.data)
+      })
+      .catch((e: AxiosError) => {
+        alert(e.message);
+      })
+  }
+  useEffect(() => {
+    GetImgs();
+  }, [access]);
   return <div>
     <Nav />
     <main>
