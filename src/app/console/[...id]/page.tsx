@@ -4,7 +4,6 @@ import './style.scss';
 import Link from 'next/link';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { tokenStore } from 'store';
-import Client from '@/assets/client';
 
 class plants {
   preferSoil: number;
@@ -120,7 +119,10 @@ export default function Console({ params }) {
       }
     };
     socket.onclose = (e: CloseEvent) => {
-      console.log("WebSocket connection closed");
+      console.log("WebSocket connection closed", e);
+      if (e.reason === '') {
+        return;
+      }
       alert(e.reason)
     };
     socket.onerror = (error: ErrorEvent) => {
