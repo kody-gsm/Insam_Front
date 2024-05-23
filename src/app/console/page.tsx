@@ -33,6 +33,9 @@ export default function Console() {
   const getPots = () => {
     Client.get('/user/pot/read', { headers: { 'access_token': access } })
       .then((e: AxiosResponse) => {
+        if (e.data.length === 0) {
+          return;
+        }
         setPotlist(e.data);
       }).catch((e: AxiosError) => {
         alert(e.message);
