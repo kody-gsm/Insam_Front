@@ -85,18 +85,14 @@ export default function Console({ params }) {
     socket.onopen = () => {
       console.log("WebSocket connection opened");
       socket.send(access);
-      // requestData("cam_stream")
-      // setInterval(() => {
-      //   if (socket.OPEN) {
-      //     requestData('dht');
-      //   }
-      // }, 1000)
-      // setTimeout(() => {
-      //   requestData("cam_stop")
-      // }, 5000);
-
-      // requestData('soil');
-      // requestData('water');
+      setInterval(() => {
+        if (socket.readyState === socket.OPEN) {
+          requestData("cam_stream")
+          requestData('dht');
+          requestData('soil');
+          requestData('water');
+        }
+      }, 1000);
     };
     socket.onmessage = (event: MessageEvent) => {
       const type: string = event.data.split(':')[0];
