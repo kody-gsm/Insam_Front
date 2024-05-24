@@ -12,7 +12,11 @@ export default function Header() {
   useEffect(() => {
     setWid(window.innerWidth);
     if (document.cookie) {
-      setRefresh(document.cookie.split('refresh=')[1].split(';')[0])
+      const ref = document.cookie?.split('refresh=')[1]?.split(';')[0];
+      if (!ref) {
+        return;
+      }
+      setRefresh(ref)
     }
     if (typeof window !== 'undefined') {
       window.addEventListener('resize', () => {

@@ -7,18 +7,14 @@ import { tokenStore } from 'store';
 import Client from '@/assets/client';
 import { AxiosError, AxiosResponse } from 'axios';
 
-class ImgStatus {
-  time: string;
-  img: string;
-  constructor(time: string, img: string) {
-    this.time = time;
-    this.img = img;
-  }
+interface ImgStatus {
+  image_time: string;
+  image: string;
 }
 
 export default function Console({ params }) {
   const { id } = params;
-  const [list, setList] = useState<ImgStatus[]>()
+  const [list, setList] = useState<ImgStatus[]>([])
   const [index, setIndex] = useState<number>(0)
   const { access } = tokenStore(e => e);
   const GetImgs = async () => {
@@ -66,7 +62,7 @@ export default function Console({ params }) {
           <div className='nodes'>
             <div className='between'>
               <div className='node'>{
-                list && <>
+                list.length !== 0 && <>
                   <p>{index + 1}번째 {list[index]['image_time']}</p>
                   <img src={`http://standard.alcl.cloud:22537/image/${list[index]['image']}`} />
                 </>}
