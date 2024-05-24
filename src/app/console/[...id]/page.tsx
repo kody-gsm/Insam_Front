@@ -86,11 +86,11 @@ export default function Console({ params }) {
       console.log("WebSocket connection opened");
       socket.send(access);
       requestData("cam_stream")
-      requestData('dht');
-      requestData('soil');
-      requestData('water');
       setInterval(() => {
         if (socket.readyState === socket.OPEN) {
+          requestData('dht');
+          requestData('soil');
+          requestData('water');
         }
       }, 1000);
     };
