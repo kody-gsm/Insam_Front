@@ -164,6 +164,9 @@ function Pot({ code, name, status, editmode, setEditmode, link, editname, delfun
           <span>{status ? 'connected' : 'disconnected'}</span>
           {!status ? <div className="red"></div> : <div className="green"></div>}
         </div>
+        <Link href={`/console/timelapse/${code}`}>
+          타임랩스
+        </Link>
       </div>
     </div>
     <div className="edit">
