@@ -39,7 +39,7 @@ export default function Console({ params }) {
   const setTargetFunc = (target: number) => {
     setTargetSoil(target);
   }
-  const wsURL = `ws://${process.env.NEXT_PUBLIC_WS_URL}/user/pot/${id}`
+  const wsURL = `wss://${process.env.NEXT_PUBLIC_WS_URL}/user/pot/${id}`
   const requestData = (key: 'dht' |
     'soil' | 'water' | 'cam' |
     'led_on' | 'led_off' | 'cam_stream' |
@@ -86,11 +86,11 @@ export default function Console({ params }) {
       console.log("WebSocket connection opened");
       socket.send(access);
       requestData("cam_stream")
-      requestData('dht');
-      requestData('soil');
-      requestData('water');
       setInterval(() => {
         if (socket.readyState === socket.OPEN) {
+          requestData('dht');
+          requestData('soil');
+          requestData('water');
         }
       }, 1000);
     };
