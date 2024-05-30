@@ -39,7 +39,7 @@ export default function Console({ params }) {
   const setTargetFunc = (target: number) => {
     setTargetSoil(target);
   }
-  const wsURL = `ws://${process.env.NEXT_PUBLIC_WS_URL}/user/pot/${id}`
+  const wsURL = `wss://${process.env.NEXT_PUBLIC_WS_URL}/user/pot/${id}`
   const requestData = (key: 'dht' |
     'soil' | 'water' | 'cam' |
     'led_on' | 'led_off' | 'cam_stream' |
