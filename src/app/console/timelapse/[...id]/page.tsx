@@ -12,6 +12,8 @@ interface ImgStatus {
   image: string;
 }
 
+
+
 export default function Console({ params }) {
   const { id } = params;
   const [list, setList] = useState<ImgStatus[]>([])
@@ -23,7 +25,14 @@ export default function Console({ params }) {
     }
     Client.get(`/user/image/${id}`, { headers: { 'access_token': access } })
       .then((e: AxiosResponse) => {
-        setList(e.data)
+        const data: ImgStatus[] = e.data;
+        const list: ImgStatus[] = data.map(e => {
+          return {
+            image_time: e.image_time,
+            image: 'data:image/jpg;base64,' + e.image
+          }
+        })
+        setList(list)
       })
       .catch((e: AxiosError) => {
         alert(e.message);
@@ -64,7 +73,7 @@ export default function Console({ params }) {
               <div className='node'>{
                 list.length !== 0 && <>
                   <p>{index + 1}번째 {list[index]['image_time']}</p>
-                  <img src={`http://standard.alcl.cloud:22537/image/${list[index]['image']}`} />
+                  <img src={`${list[index]['image']}`} />
                 </>}
               </div>
             </div>
