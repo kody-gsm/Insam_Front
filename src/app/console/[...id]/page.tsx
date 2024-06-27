@@ -22,7 +22,7 @@ export default function Console({ params }) {
   const [temp, setTemp] = useState<number>(20);
   const [humi, setHumi] = useState<number>(20);
   const [soil, setSoil] = useState<number>(20);
-  const [water, setWater] = useState<number>(20);
+  const [water, setWater] = useState<number>(30);
   const [targetSoil, setTargetSoil] = useState<number>(30)
   const [socket, setSocket] = useState<undefined | WebSocket>();
   const [img, setImg] = useState<string | null>(null);
@@ -111,7 +111,7 @@ export default function Console({ params }) {
         setSoil(+data);
       }
       if (type === 's3') { //water
-        setWater(+data);
+        setWater(+data / 3);
       }
     };
     socket.onclose = (e: CloseEvent) => {
@@ -119,7 +119,10 @@ export default function Console({ params }) {
       if (e.reason === '') {
         return;
       }
-      alert(e.reason)
+      if (confirm(e.reason + "\n retry?")) {
+        const websocket = new WebSocket(wsURL);
+        setSocket(websocket);
+      }
     };
     socket.onerror = (error: ErrorEvent) => {
       console.error("WebSocket error:", error);
@@ -179,10 +182,9 @@ export default function Console({ params }) {
             <div className='node'>
               <p>남은 물</p>
               {water >= 80 && <span>매우 충분</span>}
-              {80 > water && water >= 60 && <span>충분</span>}
-              {60 > water && water >= 40 && <span>보통</span>}
-              {40 > water && water >= 20 && <span>부족</span>}
-              {20 > water && water >= 0 && <span>매우 부족</span>}
+              {80 > water && water >= 40 && <span>충분</span>}
+              {40 > water && water >= 20 && <span>보통</span>}
+              {20 > water && water >= 0 && <span>부족</span>}
             </div>
             <div className='node'>
               <p>생장등 조절</p>
