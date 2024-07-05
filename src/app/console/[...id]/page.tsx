@@ -86,6 +86,10 @@ export default function Console({ params }) {
       console.log("WebSocket connection opened");
       socket.send(access);
       requestData("cam_stream")
+      window.addEventListener('beforeunload', () => {
+        requestData('cam_stop');
+        socket.close();
+      });
       setInterval(() => {
         if (socket.readyState === socket.OPEN) {
           requestData('dht');
