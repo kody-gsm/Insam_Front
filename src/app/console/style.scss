@@ -44,10 +44,6 @@ main {
     align-items: center;
     overflow-y: auto;
 
-    @media screen and (max-width: 768px) {
-      margin: 50px 0;
-      width: auto;
-    }
 
     &::-webkit-scrollbar {
       width: 30px;
@@ -61,6 +57,15 @@ main {
       background-color: #d9d9d9;
       border-radius: 300px;
       border: 10px solid white;
+    }
+
+    @media screen and (max-width: 768px) {
+      margin: 10px 0;
+      width: auto;
+
+      &::-webkit-scrollbar {
+        width: 0;
+      }
     }
 
     .add {
@@ -149,6 +154,10 @@ main {
     height: 100px;
     margin-right: 20px;
     border-radius: 20px;
+
+    @media screen and (max-width: 768px) {
+      display: none;
+    }
   }
 
   .edit {

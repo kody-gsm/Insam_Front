@@ -60,7 +60,7 @@ export default function Login() {
         <hr />
         <Link href={'/editpw'}>
           <h3>
-            비밀번호를 까먹었다면 비밀번호 변경
+            비밀번호 변경
           </h3>
         </Link>
       </form>
