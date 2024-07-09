@@ -43,7 +43,7 @@ export default function Console({ params }) {
   const wsURL = `wss://${process.env.NEXT_PUBLIC_WS_URL}/user/pot/${id}`
   const requestData = (key: 'dht' |
     'soil' | 'water' | 'cam' |
-    'led_on' | 'led_off' | 'cam_stream' |
+    'led_on' | 'led_off' | 'cam_stream' | 'led_status' | 'set_soil' |
     'cam_stop' | string) => {
     if (!socket) {
       return;
@@ -76,6 +76,10 @@ export default function Console({ params }) {
         break;
       case 'cam_stop':
         message = 's4:stop';
+        break;
+      case 'set_soil':
+        message = 'c3:' + targetSoil;
+        console.log(message)
         break;
       default:
         return;
@@ -163,8 +167,11 @@ export default function Console({ params }) {
       };
     }
   }, []);
+  useEffect(() => {
+    requestData('set_soil')
+  }, [targetSoil])
   return <div>
-    {popup && <Popup setPopup={setPopup} setTargetFunc={setTargetFunc} list={list} initNum={0} />}
+    {popup && <Popup requestData={requestData} setPopup={setPopup} setTargetFunc={setTargetFunc} list={list} initNum={0} />}
     <Nav />
     <main>
       <div>
@@ -231,7 +238,7 @@ export default function Console({ params }) {
   </div >
 }
 
-function Popup({ setPopup, list, initNum, setTargetFunc }) {
+function Popup({ setPopup, list, initNum, setTargetFunc, requestData }) {
   const [num, setNum] = useState<plants | number | string>(initNum);
   const [percent, setPercent] = useState<number | string>('');
   const Setting = async () => {
