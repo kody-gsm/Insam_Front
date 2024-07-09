@@ -27,7 +27,7 @@ main {
     flex-direction: column;
 
     @media screen and (max-width: 768px) {
-      margin-left: 30px;
+      margin-left: 0px;
       width: auto;
     }
 
@@ -75,6 +75,12 @@ main {
       border-radius: 200px;
       font-weight: bold;
       cursor: pointer;
+
+      @media screen and (max-width: 768px) {
+        width: 70svw;
+        height: 40px;
+        // margin-top: -50px;
+      }
     }
 
     h3 {

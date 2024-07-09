@@ -26,6 +26,7 @@ export default function Console({ params }) {
   const [targetSoil, setTargetSoil] = useState<number>(30)
   const [socket, setSocket] = useState<undefined | WebSocket>();
   const [img, setImg] = useState<string | null>(null);
+  const [width, setWidth] = useState<number>(0);
   const list = [
     new plants(30, '다육이'),
     new plants(40, '케일'),
@@ -61,6 +62,9 @@ export default function Console({ params }) {
       case 'cam':
         message = 's4';
         break;
+      case 'led_status':
+        message = 's5';
+        break;
       case 'led_on':
         message = 'c1:True';
         break;
@@ -90,6 +94,7 @@ export default function Console({ params }) {
         requestData('cam_stop');
         socket.close();
       });
+      requestData('led_status');
       setInterval(() => {
         if (socket.readyState === socket.OPEN) {
           requestData('dht');
@@ -101,7 +106,6 @@ export default function Console({ params }) {
     socket.onmessage = (event: MessageEvent) => {
       const type: string = event.data.split(':')[0];
       const data: string = event.data.split(':')[1];
-      // console.log(event.data)
       if (type === 's4' && data !== 'stop') {
         setImg(`data:image/jpg;base64,${data}`)
         return;
@@ -116,6 +120,9 @@ export default function Console({ params }) {
       }
       if (type === 's3') { //water
         setWater(+data / 3);
+      }
+      if (type === 's5') {
+        setLight(data === 'True')
       }
     };
     socket.onclose = (e: CloseEvent) => {
@@ -144,6 +151,18 @@ export default function Console({ params }) {
       }
     }
   }, [access]);
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const handleResize = () => {
+        setWidth(window.innerWidth);
+      };
+      setWidth(window.innerWidth);
+      window.addEventListener('resize', handleResize);
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
+    }
+  }, []);
   return <div>
     {popup && <Popup setPopup={setPopup} setTargetFunc={setTargetFunc} list={list} initNum={0} />}
     <Nav />
@@ -173,11 +192,17 @@ export default function Console({ params }) {
             <p>땅속 습도</p>
             <span>{soil}%</span>
           </div>
+          {width > 768 &&
+            <div className='buttons'>
+              <button>목표 {targetSoil}%</button>
+              <button className='set_target' onClick={() => setPopup(true)}>목표 설정</button>
+            </div>}
+        </div>
+        {width <= 768 &&
           <div className='buttons'>
             <button>목표 {targetSoil}%</button>
             <button className='set_target' onClick={() => setPopup(true)}>목표 설정</button>
-          </div>
-        </div>
+          </div>}
         <div className='seconds'>
           <div className='img'>
             <img src={img || 'https://i.pinimg.com/originals/80/2a/62/802a62c6515f83bdee0e8f0ef1a7c68c.jpg'} alt='cam' />
