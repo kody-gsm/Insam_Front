@@ -72,7 +72,7 @@ export default function Console({ params }) {
             <div className='between'>
               <div className='node'>{
                 list.length !== 0 && <>
-                  <p>{index + 1}번째 {list[index]['image_time']}</p>
+                  <p>{index + 1}/{list.length} {list[index]['image_time']}</p>
                   <img src={`${list[index]['image']}`} />
                 </>}
               </div>
