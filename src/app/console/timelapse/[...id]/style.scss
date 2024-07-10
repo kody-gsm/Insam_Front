@@ -146,6 +146,7 @@ main {
               max-height: 48svh;
               background-color: lightgray;
               border-radius: 20px;
+              transform: rotate(180deg);
 
               @media screen and (max-width: 768px) {
                 max-width: 80svw;

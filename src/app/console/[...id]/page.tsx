@@ -43,7 +43,7 @@ export default function Console({ params }) {
   const wsURL = `wss://${process.env.NEXT_PUBLIC_WS_URL}/user/pot/${id}`
   const requestData = (key: 'dht' |
     'soil' | 'water' | 'cam' |
-    'led_on' | 'led_off' | 'cam_stream' | 'led_status' | 'set_soil' |
+    'led_on' | 'led_off' | 'cam_stream' | 'led_status' | 'set_soil' | 'target_soil' |
     'cam_stop' | string) => {
     if (!socket) {
       return;
@@ -64,6 +64,9 @@ export default function Console({ params }) {
         break;
       case 'led_status':
         message = 's5';
+        break;
+      case 'target_soil':
+        message = 's6';
         break;
       case 'led_on':
         message = 'c1:True';
@@ -99,6 +102,7 @@ export default function Console({ params }) {
         socket.close();
       });
       requestData('led_status');
+      requestData('target_soil');
       setInterval(() => {
         if (socket.readyState === socket.OPEN) {
           requestData('dht');
@@ -127,6 +131,9 @@ export default function Console({ params }) {
       }
       if (type === 's5') {
         setLight(data === 'True')
+      }
+      if (type === 's6') {
+        setTargetSoil(+data)
       }
     };
     socket.onclose = (e: CloseEvent) => {
