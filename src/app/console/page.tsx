@@ -54,7 +54,6 @@ export default function Console() {
   const delPot = (code: string) => {
     Client.post('user/pot/remove', { code: code }, { headers: { 'access_token': access } })
       .then((e: AxiosResponse) => {
-        // console.log(e.data);
         getPots();
       })
       .catch((e: AxiosError) => {
@@ -119,7 +118,7 @@ function Popup({ setPopup }: { setPopup: Function }) {
       code: potid,
       name: name
     }, { headers: { "access_token": access } }).then((e: AxiosResponse) => {
-      console.log(e.data);
+      // console.log(e.data);
       setError('');
       setPopup(false);
     }).catch((e: AxiosError) => {
