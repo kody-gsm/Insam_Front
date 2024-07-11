@@ -36,7 +36,17 @@ export default function Console() {
         if (e.data.length === 0) {
           return;
         }
-        setPotlist(e.data);
+        let list: PotInterface[] = e.data;
+        let queue = []
+        for (let i = 0; i < list.length; i++) {
+          if (list[i].is_active) {
+            queue = [list[i], ...queue];
+          } else {
+            queue.push(list[i]);
+
+          }
+        }
+        setPotlist(queue);
       }).catch((e: AxiosError) => {
         alert(e.message);
       })

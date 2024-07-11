@@ -49,7 +49,7 @@ export default function Console({ params }) {
         } else {
           setIndex(e => e + 1);
         }
-      }, 1000);
+      }, 250);
     }
   }, [list, index])
   return <div>
@@ -70,8 +70,8 @@ export default function Console({ params }) {
         <div className='second'>
           <div className='nodes'>
             <div className='between'>
-              <div className='node'>{
-                list.length !== 0 && <>
+              <div className='node'>
+                {list.length !== 0 && <>
                   <p>{index + 1}/{list.length} {list[index]['image_time']}</p>
                   <img src={`${list[index]['image']}`} />
                 </>}
